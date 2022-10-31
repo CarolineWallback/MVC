@@ -39,7 +39,7 @@ namespace MVC.Controllers
 
             ViewBag.Message = string.Empty;
 
-            return View("GuessingGame");
+            return View("GuessingGame", GGModel);
         }
     }
 }
