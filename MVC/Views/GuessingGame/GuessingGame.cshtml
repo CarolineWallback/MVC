@@ -1,0 +1,36 @@
+﻿@model GuessingGameModel
+
+@{
+    ViewData["Title"] = "Guessing Game";
+}
+
+<h1>Guessing Game</h1>
+
+
+<form asp-action="GuessingGame" method="post">
+    <div class="mb-2">
+        <label>Guess a number between 1-100: </label>
+    </div>
+    
+    <input type="number" step="any" name="number"/>
+
+    <div class="mt-2 mb-2">
+    <input type="submit" value="Guess!" />
+    <input asp-action="Clear" type="submit" value="Restart" />
+    </div>
+</form>
+
+
+
+@if (ViewBag.Message != null)
+{
+    <p> @ViewBag.Message </p>
+   
+    @if(Model.counter != 0)
+    {
+     <p>Number of guesses: @Model.counter </p>
+    }
+ 
+    
+    
+}
