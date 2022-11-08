@@ -1,0 +1,22 @@
+﻿@model PeopleViewModel
+
+@foreach (var person in Model.PeopleList)
+{
+    <div class="row bg-light text-dark p-1">
+        <div class="col p-1">
+            <h4>@person.Name</h4>
+        </div>
+        <div class="col p-1">
+            <h4>@person.PhoneNumber</h4>
+        </div>
+        <div class="col p-1">
+            <h4>@person.City</h4>
+        </div>
+        <div class="col">
+            <a class="btn btn-dark btn-sm" onclick="location.href =
+            '@Url.Action("DeletePerson", "PeopleList", new{id = person.Id})'">Delete</a>
+        </div>
+    </div>
+}
+
+

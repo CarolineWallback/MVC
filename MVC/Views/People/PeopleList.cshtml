@@ -57,24 +57,8 @@
     }
     else
     {
-        foreach (var person in Model.PeopleList)
-        {
-            <div class="row bg-light p-1">
-                <div class="col p-1">
-                    <h4>@person.Name</h4>
-                </div>
-                <div class="col p-1">
-                    <h4>@person.PhoneNumber</h4>
-                </div>
-                <div class="col p-1">
-                    <h4>@person.City</h4>
-                </div>
-                <div class="col">
-                    <a class="btn btn-dark btn-sm" onclick="location.href =
-                    '@Url.Action("DeletePerson", "PeopleList", new{id = person.Id})'">Delete</a>
-                </div>
-            </div>
-        }
+        <partial name="../Shared/_personListPartial.cshtml" model="@Model"/>
+
         <div class="mt-2">
             <a class="btn btn-dark btn-sm" onclick="location.href =
                     '@Url.Action("SortPeople", "PeopleList")'">Sort alphabetically</a>
@@ -86,7 +70,7 @@
 
 @*Add new person to list*@
 <div class="container add-person mt-5">
-    <form asp-controller="PeopleList" asp-action="CreatePerson" method="post">
+    <form asp-controller="People" asp-action="CreatePerson" method="post">
         <h4 class="fw-bold mb-2">Add new person to list: </h4>
         <br />
 
