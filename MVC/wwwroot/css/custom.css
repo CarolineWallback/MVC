@@ -1,7 +1,9 @@
-﻿﻿body {
-    padding-top: 5rem;
-    padding-bottom: 3rem;
-    background-color: rgb(153, 235, 238);
+﻿.main-content{
+    background-color: darkslategray;
+    height: 100vh;
+    width: 100vw;
+    color: floralwhite
+    
 }
 
 .tab {
@@ -11,10 +13,26 @@
 
 .icon {
     color: rgb(0, 255, 144);
+   
 }
 
 .link{
     text-decoration: none;
     color: rgb(0, 255, 144);
     font-style: italic;
+}
+
+
+.people .form {
+    display: flex;
+    max-width: 500px;
+    justify-content: space-between;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px; 
+    left: 6rem;
 }

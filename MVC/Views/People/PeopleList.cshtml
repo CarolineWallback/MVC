@@ -1,0 +1,111 @@
+﻿@model PeopleViewModel
+
+@{
+    ViewData["Title"] = "Person List";
+}
+
+@*Search for person in list*@
+<div class="people">
+<div class="d-flex justify-content-end">
+    <form method="post">
+        <label class="fw-bold">Search by name: </label><span class="tab"></span>
+        <input class="rounded border-light" asp-for=Search type="search" />
+        <span class="tab"></span><span class="tab"></span>
+        <input asp-controller="PeopleList" asp-action="Search" class="form-button btn btn-success btn-sm" style="height=32px;" type="submit" value="Search" />
+        <input asp-controller="PeopleList" asp-action="PeopleList" class="button btn btn-dark btn-sm" type="submit" value="Clear Search" />
+        <div class="container case-sensitive d-flex justify-content-end fw-bold">
+            <input class="form-check-input" type="checkbox" asp-for="CaseSensitive" />
+            <span class="tab"></span>
+            <p>Ignore case sensitivity</p>
+
+        </div>
+    </form>
+    <br />
+    <br />
+</div>
+
+<br />
+
+@*Showing number of results of search*@
+<div class="d-flex justify-content-end">
+    @if (ViewBag.Message != null)
+    {
+        <h6>@ViewBag.Message</h6>
+    }
+</div>
+
+
+@*Showing all people in the list*@
+<div class="container">
+    <div class="row bg-dark text-light fw-semibold p-1">
+        <div class="col p-1">
+            <h4>Name</h4>
+        </div>
+        <div class="col p-1">
+            <h4>Number</h4>
+        </div>
+        <div class="col p-1">
+            <h4>City</h4>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    @if (Model.PeopleList.Count == 0)
+    {
+        <br />
+        <h4 class="fst-italic">No people in the list</h4>
+    }
+    else
+    {
+        foreach (var person in Model.PeopleList)
+        {
+            <div class="row bg-light p-1">
+                <div class="col p-1">
+                    <h4>@person.Name</h4>
+                </div>
+                <div class="col p-1">
+                    <h4>@person.PhoneNumber</h4>
+                </div>
+                <div class="col p-1">
+                    <h4>@person.City</h4>
+                </div>
+                <div class="col">
+                    <a class="btn btn-dark btn-sm" onclick="location.href =
+                    '@Url.Action("DeletePerson", "PeopleList", new{id = person.Id})'">Delete</a>
+                </div>
+            </div>
+        }
+        <div class="mt-2">
+            <a class="btn btn-dark btn-sm" onclick="location.href =
+                    '@Url.Action("SortPeople", "PeopleList")'">Sort alphabetically</a>
+        </div>
+    }
+
+</div>
+
+
+@*Add new person to list*@
+<div class="container add-person mt-5">
+    <form asp-controller="PeopleList" asp-action="CreatePerson" method="post">
+        <h4 class="fw-bold mb-2">Add new person to list: </h4>
+        <br />
+
+        <div class="form">
+            <label class="fw-bold">@Html.DisplayNameFor(model => model.Name)</label>
+            <input class="rounded border-light m-1" asp-for="Name" type="text" />
+        </div>
+        <div class="form">
+            <label class="fw-bold">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
+            <input class="rounded border-light m-1" asp-for="PhoneNumber" type="text" />
+        </div>
+        <div class="form">
+            <label class="fw-bold">@Html.DisplayNameFor(model => model.City)</label>
+            <input class="rounded border-light m-1" asp-for="City" type="text" />
+        </div>
+        <div>
+            <input class="form-button btn btn-success m-1" type="submit" value="Add Person" />
+        </div>
+
+    </form>
+</div>
+</div>
