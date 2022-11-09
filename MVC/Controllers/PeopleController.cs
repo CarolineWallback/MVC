@@ -8,9 +8,11 @@ namespace MVC.Controllers
     {
         public IActionResult PeopleList()
         {
+            if (CreatePersonViewModel.GetPeopleList().Count == 0)
+                CreatePersonViewModel.MockRepository();
+
             PeopleViewModel peopleViewModel = new();
-            CreatePersonViewModel createPersonViewModel = new();
-            peopleViewModel.PeopleList = createPersonViewModel.GetPeopleList();
+            peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
 
             return View(peopleViewModel);
         }
@@ -20,16 +22,16 @@ namespace MVC.Controllers
         {
             PeopleViewModel peopleViewModel = new();
             peopleViewModel.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
-            peopleViewModel.PeopleList = peopleViewModel.GetPeopleList();
+            peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
             return View("PeopleList", peopleViewModel);
         }
 
 
         public IActionResult DeletePerson(int id)
         {
-            CreatePersonViewModel createPersonViewModel = new();
-            Person person = createPersonViewModel.GetPersonFromId(id);
-            createPersonViewModel.DeletePerson(person);
+          
+            Person person = CreatePersonViewModel.GetPersonFromId(id);
+            CreatePersonViewModel.DeletePerson(person);
 
             return RedirectToAction("PeopleList");
         }
@@ -40,9 +42,8 @@ namespace MVC.Controllers
             if(peopleViewModel.Search != null)
             {
                 var search = peopleViewModel.Search;
-                CreatePersonViewModel createPersonViewModel = new();
-          
-                foreach(var person in createPersonViewModel.GetPeopleList())
+              
+                foreach(var person in CreatePersonViewModel.GetPeopleList())
                 {
                     if(!peopleViewModel.CaseSensitive)
                     {
@@ -70,8 +71,7 @@ namespace MVC.Controllers
 
         public IActionResult SortPeople(PeopleViewModel peopleViewModel)
         {
-            CreatePersonViewModel createPersonViewModel = new();
-            var people = createPersonViewModel.GetPeopleList();
+            var people = CreatePersonViewModel.GetPeopleList();
             people.Sort((x, y) => string.Compare(x.Name, y.Name));
 
             return RedirectToAction("PeopleList", peopleViewModel);

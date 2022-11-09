@@ -17,30 +17,38 @@ namespace MVC.ViewModels
 
         private static List<Person> PeopleList = new List<Person>();
 
-        private int _idCounter = 0;
+        private int _idCounter = 3;
 
-        public List<Person> GetPeopleList()
+        public static List<Person> GetPeopleList()
         {
             return PeopleList;
         }
 
-        public void CreatePerson(string name, string number, string city)
+        public static void MockRepository()
         {
-            var id = _idCounter++;
-            Person person = new Person(id, name, number, city);
-            PeopleList.Add(person);
-
+            Person person01 = new Person(1, "Hilda", "0756845297", "Gothenburg");
+            PeopleList.Add(person01);
+            Person person02 = new Person(2, "Berit", "0735648701", "Stockholm");
+            PeopleList.Add(person02);
+            Person person03 = new Person(3, "Albert", "0765487028", "Karlstad");
+            PeopleList.Add(person03);
         }
 
-        public bool DeletePerson(Person person)
-        { 
+        public void CreatePerson(string name, string number, string city)
+        {
+            _idCounter++;
+            Person person = new Person(_idCounter, name, number, city);
+            PeopleList.Add(person);
+        }
 
+        public static bool DeletePerson(Person person)
+        { 
             return PeopleList.Remove(person);
         }
 
-        public Person GetPersonFromId(int id)
+        public static Person GetPersonFromId(int id)
         {
-            Person personFromId = PeopleList.Find(p => p.Id == id);
+            Person personFromId = PeopleList.FirstOrDefault(p => p.Id == id);
             return personFromId;
         }
 

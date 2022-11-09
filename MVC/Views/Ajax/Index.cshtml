@@ -1,0 +1,67 @@
+﻿@model PeopleViewModel
+
+@{
+    ViewData["Title"] = "People";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <div>
+        <button class="mb-5 rounded" onclick="GetAllPeople()">Get List of All People</button>
+    </div>
+   
+    <div class="form">
+        <label class="fw-bold">Insert ID: </label><span class="tab"></span>
+        <input class="rounded border-light" type="number" id="searchValue" />
+        <span class="tab"></span><span class="tab"></span>
+        <button class="btn btn-success btn-sm" type="submit" onclick="GetDetails()">Search for Person</button>
+        <button class="btn btn-danger btn-sm" type="submit" onclick="DeletePerson()">Delete Person</button>
+    
+    </div>
+</div>
+   
+    <div id="peopleList"></div>
+    <div id="personDetail"></div>
+
+<script>
+    function GetAllPeople() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Ajax/ShowPeopleList",
+            success: function (output) {
+                document.getElementById("peopleList").innerHTML = output;
+            }
+        })
+    }
+
+    function GetDetails() {
+        var inputId = $("#searchValue").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/Ajax/GetDetails?id=" + inputId,
+            success: function (response) {
+                $("#personDetail").html(response);
+            },
+            
+        });
+    }
+
+    function DeletePerson() {
+
+        var inputId = $("#searchValue").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/Ajax/DeletePerson?id=" + inputId,
+            success: function (output) {
+                document.getElementById("peopleList").innerHTML = output;
+                document.getElementById("personDetail").innerHTML = "";
+            }
+        })
+    };
+
+    function CloseDetails() {
+        document.getElementById("personDetail").innerHTML = "";
+    }
+</script>

@@ -8,8 +8,5 @@ namespace MVC.ViewModels
         public string Search { get; set; } 
         public bool CaseSensitive { get; set; }
 
-   
-
-
     }
 }
