@@ -39,22 +39,32 @@
 <div class="container">
     <div class="row bg-dark text-light fw-semibold p-1">
         <div class="col p-1">
-            <h4>Name</h4>
+            <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
         </div>
-       
         <div class="col p-1">
-            <h4>ID</h4>
+             <h4>@Html.DisplayNameFor(Model => Model.PhoneNumber)</h4>
+        </div>
+        <div class="col p-1">
+             <h4>@Html.DisplayNameFor(Model => Model.City)</h4>
+        </div>
+        <div class="col p-1">
+            
         </div>
     </div>
 
     @if (Model.PeopleList.Count == 0)
     {
-        <br />
-        <h4 class="fst-italic">No people in the list</h4>
+        
+        <h4 class="fst-italic m-3">No people in the list</h4>
     }
     else
     {
-        <partial name="../Shared/_personListPartial.cshtml" model="@Model"/>
+        foreach(var person in Model.PeopleList)
+        {
+           
+            <partial name="../Shared/_personDetailsPartial.cshtml" model="person"/>
+          
+        }
 
         <div class="mt-2">
             <a class="btn btn-dark btn-sm" onclick="location.href =

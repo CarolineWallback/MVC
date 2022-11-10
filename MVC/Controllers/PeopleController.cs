@@ -21,7 +21,11 @@ namespace MVC.Controllers
         public IActionResult CreatePerson(CreatePersonViewModel cpvm)
         {
             PeopleViewModel peopleViewModel = new();
-            peopleViewModel.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
+            if(ModelState.IsValid)
+            {
+                peopleViewModel.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
+
+            }
             peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
             return View("PeopleList", peopleViewModel);
         }

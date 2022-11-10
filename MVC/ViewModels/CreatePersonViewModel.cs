@@ -7,6 +7,7 @@ namespace MVC.ViewModels
     public class CreatePersonViewModel
     {
         [Display(Name = "Full Name")]
+        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Phone Number")]

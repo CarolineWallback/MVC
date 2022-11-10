@@ -1,0 +1,20 @@
+﻿@model PeopleViewModel
+ 
+@*Show All People*@
+@foreach (var person in Model.PeopleList)
+{
+    <div class="row bg-light text-dark p-1">
+        <div class="col p-1">
+            <h4>@person.Name</h4>
+        </div>
+        <div class="col p-1">
+            <h4>Id: @person.Id</h4>
+        </div>
+    </div>
+}
+
+
+
+
+
+

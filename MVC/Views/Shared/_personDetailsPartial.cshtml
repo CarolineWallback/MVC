@@ -2,29 +2,23 @@
 
 @if(Model != null)
 {
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col">
-                <h5>@Model.Name</h5>
-            </div>
-            <div class="col">
-                <p>@Model.PhoneNumber</p>
-            </div>
-            <div class="col">
-                <p>@Model.City</p>
-            </div>
-            <div class="col">
-                <button class="btn btn-warning btn-sm" onclick="CloseDetails()">Close Details</button>
-            </div>
+    <div class="row bg-light text-bg-light p-1">
+        <div class="col">
+            <h5>@Model.Name</h5>
         </div>
-    </div>
+        <div class="col">
+            <p>@Model.PhoneNumber</p>
+        </div>
+        <div class="col">
+            <p>@Model.City</p>
+        </div>
+        <div class="col"></div>
+     </div>  
 }
 
 else
 {
-    <div class="mt-3">
-        @ViewBag.SearchResult
-    </div>
+    @ViewBag.SearchResult
 }
 
 
