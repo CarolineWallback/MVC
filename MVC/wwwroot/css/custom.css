@@ -1,20 +1,22 @@
 ﻿
-body {
-    min-width: 100%;
-    min-height: 100%;
+.main-content {
     background-color: darkslategray;
     color: floralwhite;
-    display: block;
+    min-width: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
 }
 
- 
 
-footer{
-    position: relative;
+
+.footer {
     display: block;
     bottom: 0;
+    left: 80px;
     width: 100%;
-    margin-top: 40px;
+    height: 40px;
+    position:absolute;
 }
 
 
