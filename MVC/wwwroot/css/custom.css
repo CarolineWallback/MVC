@@ -1,9 +1,20 @@
-﻿.main-content{
-    margin: 0;
-    padding: 0;
+﻿
+body {
+    min-width: 100%;
+    min-height: 100%;
     background-color: darkslategray;
     color: floralwhite;
+    display: block;
+}
+
  
+
+footer{
+    position: relative;
+    display: block;
+    bottom: 0;
+    width: 100%;
+    margin-top: 40px;
 }
 
 
@@ -24,9 +35,10 @@
 }
 
 
-#people .form {
+.people .form-row {
     display: flex;
     max-width: 500px;
     justify-content: space-between;
 }
+
 

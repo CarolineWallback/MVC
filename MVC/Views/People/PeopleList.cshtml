@@ -8,7 +8,7 @@
 <div class="people">
 <div class="d-flex justify-content-end">
     <form method="post">
-        <label class="fw-bold">Search by name: </label><span class="tab"></span>
+        <label class="fw-bold">Search by name or city: </label><span class="tab"></span>
         <input class="rounded border-light" asp-for=Search type="search" />
         <span class="tab"></span><span class="tab"></span>
         <input asp-controller="People" asp-action="Search" class="form-button btn btn-success btn-sm" style="height=32px;" type="submit" value="Search" />
@@ -81,17 +81,17 @@
         <h4 class="fw-bold mb-2">Add new person to list: </h4>
         <br />
 
-        <div class="form">
+        <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(model => model.Name)</label>
-            <input class="rounded border-light m-1" asp-for="Name" type="text" />
+            <input class="input rounded border-light m-1" asp-for="Name" type="text" />
         </div>
-        <div class="form">
+            <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
-            <input class="rounded border-light m-1" asp-for="PhoneNumber" type="text" />
+            <input class="input rounded border-light m-1" asp-for="PhoneNumber" type="text" />
         </div>
-        <div class="form">
+            <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(model => model.City)</label>
-            <input class="rounded border-light m-1" asp-for="City" type="text" />
+            <input class="input rounded border-light m-1" asp-for="City" type="text" />
         </div>
         <div>
             <input class="form-button btn btn-success m-1" type="submit" value="Add Person" />
@@ -100,3 +100,4 @@
     </form>
 </div>
 </div>
+
