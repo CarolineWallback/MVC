@@ -8,11 +8,11 @@ namespace MVC.Controllers
     {
         public IActionResult PeopleList()
         {
-            if (CreatePersonViewModel.GetPeopleList().Count == 0)
+            if (PeopleViewModel.PeopleList.Count == 0)
                 CreatePersonViewModel.MockRepository();
 
             PeopleViewModel peopleViewModel = new();
-            peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
+            peopleViewModel.TempList = PeopleViewModel.PeopleList;
 
             return View(peopleViewModel);
         }
@@ -26,16 +26,15 @@ namespace MVC.Controllers
                 peopleViewModel.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
 
             }
-            peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
+            peopleViewModel.TempList = PeopleViewModel.PeopleList;
             return View("PeopleList", peopleViewModel);
         }
 
 
         public IActionResult DeletePerson(int id)
         {
-          
-            Person person = CreatePersonViewModel.GetPersonFromId(id);
-            CreatePersonViewModel.DeletePerson(person);
+            Person personFromId = PeopleViewModel.PeopleList.FirstOrDefault(p => p.Id == id);
+            PeopleViewModel.PeopleList.Remove(personFromId);
 
             return RedirectToAction("PeopleList");
         }
@@ -46,14 +45,15 @@ namespace MVC.Controllers
             if(peopleViewModel.Search != null)
             {
                 var search = peopleViewModel.Search;
+
               
-                foreach(var person in CreatePersonViewModel.GetPeopleList())
+                foreach(var person in PeopleViewModel.PeopleList)
                 {
                     if(!peopleViewModel.CaseSensitive)
                     {
                         if (person.Name.Contains(search)||person.City.Contains(search))
                         {
-                            peopleViewModel.PeopleList.Add(person);
+                            peopleViewModel.TempList.Add(person);
                         }
                     }
                     else
@@ -61,21 +61,21 @@ namespace MVC.Controllers
                         if(person.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
                         person.City.Contains(search, StringComparison.OrdinalIgnoreCase))
                         {
-                            peopleViewModel.PeopleList.Add(person);
+                            peopleViewModel.TempList.Add(person);
                         }
                     } 
                 }
                 
             }
 
-            ViewBag.Message = $"Showing {peopleViewModel.PeopleList.Count} result(s).";
+            ViewBag.Message = $"Showing {peopleViewModel.TempList.Count} result(s).";
 
             return View("PeopleList", peopleViewModel);
         }
 
         public IActionResult SortPeople(PeopleViewModel peopleViewModel)
         {
-            var people = CreatePersonViewModel.GetPeopleList();
+            var people = PeopleViewModel.PeopleList;
             people.Sort((x, y) => string.Compare(x.Name, y.Name));
 
             return RedirectToAction("PeopleList", peopleViewModel);

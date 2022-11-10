@@ -18,42 +18,24 @@ namespace MVC.ViewModels
         [Required]
         public string City { get; set; }
 
-        private static List<Person> PeopleList = new List<Person>();
-
         private int _idCounter = 3;
-
-        public static List<Person> GetPeopleList()
+        public void CreatePerson(string name, string number, string city)
         {
-            return PeopleList;
+            _idCounter++;
+            Person person = new Person(_idCounter, name, number, city);
+            PeopleViewModel.PeopleList.Add(person);
         }
 
         public static void MockRepository()
         {
             Person person01 = new Person(1, "Hilda", "0756845297", "Gothenburg");
-            PeopleList.Add(person01);
+            PeopleViewModel.PeopleList.Add(person01);
             Person person02 = new Person(2, "Berit", "0735648701", "Stockholm");
-            PeopleList.Add(person02);
+            PeopleViewModel.PeopleList.Add(person02);
             Person person03 = new Person(3, "Albert", "0765487028", "Karlstad");
-            PeopleList.Add(person03);
+            PeopleViewModel.PeopleList.Add(person03);
         }
 
-        public void CreatePerson(string name, string number, string city)
-        {
-            _idCounter++;
-            Person person = new Person(_idCounter, name, number, city);
-            PeopleList.Add(person);
-        }
-
-        public static bool DeletePerson(Person person)
-        { 
-            return PeopleList.Remove(person);
-        }
-
-        public static Person GetPersonFromId(int id)
-        {
-            Person personFromId = PeopleList.FirstOrDefault(p => p.Id == id);
-            return personFromId;
-        }
 
     }
 }

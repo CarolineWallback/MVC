@@ -52,14 +52,14 @@
         </div>
     </div>
 
-    @if (Model.PeopleList.Count == 0)
+    @if (Model.TempList.Count == 0)
     {
         
         <h4 class="fst-italic m-3">No people in the list</h4>
     }
     else
     {
-        foreach(var person in Model.PeopleList)
+        foreach(var person in Model.TempList)
         {
            
             <partial name="../Shared/_personDetailsPartial.cshtml" model="person"/>

@@ -8,7 +8,7 @@ namespace MVC.Controllers
     {
         public IActionResult Index()
         {
-            if (CreatePersonViewModel.GetPeopleList().Count == 0)
+            if (PeopleViewModel.PeopleList.Count == 0)
                 CreatePersonViewModel.MockRepository();
 
             return View();
@@ -17,24 +17,24 @@ namespace MVC.Controllers
         public IActionResult ShowPeopleList()
         {
             PeopleViewModel peopleViewModel = new();
-            peopleViewModel.PeopleList = CreatePersonViewModel.GetPeopleList();
+            peopleViewModel.TempList = PeopleViewModel.PeopleList;
             
             return PartialView("_personListPartial", peopleViewModel);
         }
         [HttpPost]
         public IActionResult GetDetails(int id)
         {
-            
-            Person person = CreatePersonViewModel.GetPersonFromId(id);
-            if (person == null)
+
+            Person personFromId = PeopleViewModel.PeopleList.FirstOrDefault(p => p.Id == id);
+            if (personFromId == null)
                 ViewBag.SearchResult = $"No person with id {id}.";
-            return PartialView("_personDetailsPartial", person);
+            return PartialView("_personDetailsPartial", personFromId);
         }
 
         public IActionResult DeletePerson(int id)
          {
-            Person person = CreatePersonViewModel.GetPersonFromId(id);
-            CreatePersonViewModel.DeletePerson(person);
+            Person personFromId = PeopleViewModel.PeopleList.FirstOrDefault(p => p.Id == id);
+            PeopleViewModel.PeopleList.Remove(personFromId);
 
             return RedirectToAction("ShowPeopleList");
         }
