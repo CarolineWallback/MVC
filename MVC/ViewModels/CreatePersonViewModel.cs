@@ -11,9 +11,11 @@ namespace MVC.ViewModels
         public string Name { get; set; }
 
         [Display(Name = "Phone Number")]
+        [Required]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "City of Residence")]
+        [Required]
         public string City { get; set; }
 
         private static List<Person> PeopleList = new List<Person>();

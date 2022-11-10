@@ -9,7 +9,6 @@
 }
 
 
-
 .footer {
     display: block;
     bottom: 0;
@@ -37,7 +36,7 @@
 }
 
 
-.people .form-row {
+.people .form-row, .validation {
     display: flex;
     max-width: 500px;
     justify-content: space-between;

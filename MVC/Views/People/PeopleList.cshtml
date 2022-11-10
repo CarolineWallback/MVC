@@ -85,14 +85,29 @@
             <label class="fw-bold">@Html.DisplayNameFor(model => model.Name)</label>
             <input class="input rounded border-light m-1" asp-for="Name" type="text" />
         </div>
-            <div class="form-row">
+        <div class="validation">
+            <span></span>
+                <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        
+        <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
             <input class="input rounded border-light m-1" asp-for="PhoneNumber" type="text" />
         </div>
+            <div class="validation">
+                <span></span>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        
             <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(model => model.City)</label>
             <input class="input rounded border-light m-1" asp-for="City" type="text" />
         </div>
+            <div class="validation">
+                <span></span>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+
         <div>
             <input class="form-button btn btn-success m-1" type="submit" value="Add Person" />
         </div>
