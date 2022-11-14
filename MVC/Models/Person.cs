@@ -1,18 +1,25 @@
-﻿namespace MVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MVC.Models
 {
     public class Person
     {
-        public int Id { get; set; }
+        [Key]
+        public string Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string PhoneNumber { get; set; }
+        [Required]
         public string City { get; set; }
 
-        public Person(int id, string name, string phoneNumber, string city)
+        public Person() { }
+        public Person(string Id, string Name, string PhoneNumber, string City)
         {
-            Id = id;
-            Name = name;
-            PhoneNumber = phoneNumber;
-            City = city;
+            this.Id = Id;
+            this.Name = Name;
+            this.PhoneNumber = PhoneNumber;
+            this.City = City;
         }
     }
 }

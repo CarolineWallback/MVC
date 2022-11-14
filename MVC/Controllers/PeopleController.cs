@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
 
@@ -6,13 +7,16 @@ namespace MVC.Controllers
 {
     public class PeopleController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public PeopleController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult PeopleList()
         {
-            if (PeopleViewModel.PeopleList.Count == 0)
-                CreatePersonViewModel.MockRepository();
-
             PeopleViewModel peopleViewModel = new();
-            peopleViewModel.TempList = PeopleViewModel.PeopleList;
+            peopleViewModel.TempList = _context.People.ToList();
 
             return View(peopleViewModel);
         }
@@ -23,18 +27,23 @@ namespace MVC.Controllers
             PeopleViewModel peopleViewModel = new();
             if(ModelState.IsValid)
             {
-                peopleViewModel.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
-
+                Person person = cpvm.CreatePerson(cpvm.Name, cpvm.PhoneNumber, cpvm.City);
+                _context.People.Add(person);
+                _context.SaveChanges();
             }
-            peopleViewModel.TempList = PeopleViewModel.PeopleList;
+            peopleViewModel.TempList = _context.People.ToList();
             return View("PeopleList", peopleViewModel);
         }
 
 
-        public IActionResult DeletePerson(int id)
+        public IActionResult DeletePerson(string id)
         {
-            Person personFromId = PeopleViewModel.PeopleList.FirstOrDefault(p => p.Id == id);
-            PeopleViewModel.PeopleList.Remove(personFromId);
+            Person personFromId = _context.People.FirstOrDefault(p => p.Id == id);
+            if(personFromId != null)
+            {
+                _context.People.Remove(personFromId);
+                _context.SaveChanges();
+            }
 
             return RedirectToAction("PeopleList");
         }
@@ -47,7 +56,7 @@ namespace MVC.Controllers
                 var search = peopleViewModel.Search;
 
               
-                foreach(var person in PeopleViewModel.PeopleList)
+                foreach(var person in _context.People.ToList())
                 {
                     if(!peopleViewModel.CaseSensitive)
                     {
@@ -75,10 +84,10 @@ namespace MVC.Controllers
 
         public IActionResult SortPeople(PeopleViewModel peopleViewModel)
         {
-            var people = PeopleViewModel.PeopleList;
-            people.Sort((x, y) => string.Compare(x.Name, y.Name));
+            peopleViewModel.TempList = _context.People.ToList();
+            peopleViewModel.TempList.Sort((x, y) => string.Compare(x.Name, y.Name));
 
-            return RedirectToAction("PeopleList", peopleViewModel);
+            return View("PeopleList", peopleViewModel);
         }
     }
 }
