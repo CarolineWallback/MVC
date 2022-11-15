@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
@@ -37,6 +38,28 @@ namespace MVC.Controllers
             }
 
             return RedirectToAction("CountryList");
+        }
+
+        public IActionResult DeleteCountry(int id)
+        {
+            Country countryFromId = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == id);
+            if (countryFromId != null)
+            {
+                _context.Countries.Remove(countryFromId);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CountryList");
+        }
+
+        public IActionResult ViewCitiesInCountry(int id)
+        {
+            CityViewModel cityViewModel = new()
+            {
+                Cities = _context.Cities.Include(x => x.Country).Where(x => x.CountryId == id).ToList(),
+            };
+
+            return View(cityViewModel);
         }
     }
 }

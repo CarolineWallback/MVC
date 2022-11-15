@@ -32,16 +32,39 @@ namespace MVC.Controllers
             ModelState.Remove("Country");
             if (ModelState.IsValid)
             {
+                var country = _context.Countries.Find(cityViewModel.CountryId);
                 City city = new City()
                 {
                     CityName = cityViewModel.Name,
                     CountryId = cityViewModel.CountryId,
+                    Country = country
                 };
+
                 _context.Cities.Add(city);
                 _context.SaveChanges();
             }
 
             return RedirectToAction("CityList");
+        }
+
+    public IActionResult DeleteCity(int id)
+        {
+            City cityFromId = _context.Cities.Include(x => x.People).FirstOrDefault(x => x.CityId == id);
+            if (cityFromId != null)
+            {
+                _context.Cities.Remove(cityFromId);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CityList");
+        }
+
+        public IActionResult ViewCitizens(int id)
+        {
+            PeopleViewModel peopleViewModel = new();
+            peopleViewModel.PeopleList = _context.People.Include(x => x.City).Where(x => x.CityId == id).ToList();
+
+            return View(peopleViewModel);
         }
     }
 }

@@ -33,6 +33,8 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 Person person = new Person(createPerson.Name, createPerson.PhoneNumber, createPerson.CityId);
+                var City = _context.Cities.Find(createPerson.CityId);
+                person.City = City;
                 _context.People.Add(person);
                 _context.SaveChanges();
             }
