@@ -16,7 +16,8 @@ namespace MVC.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    CountryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CountryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -28,9 +29,10 @@ namespace MVC.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +52,7 @@ namespace MVC.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,9 +70,9 @@ namespace MVC.Migrations
                 columns: new[] { "CountryId", "CountryName" },
                 values: new object[,]
                 {
-                    { "1", "Sweden" },
-                    { "2", "Spain" },
-                    { "3", "Thailand" }
+                    { 1, "Sweden" },
+                    { 2, "Spain" },
+                    { 3, "Thailand" }
                 });
 
             migrationBuilder.InsertData(
@@ -78,12 +80,12 @@ namespace MVC.Migrations
                 columns: new[] { "CityId", "CityName", "CountryId" },
                 values: new object[,]
                 {
-                    { "1", "Gothenburg", "1" },
-                    { "2", "Karlstad", "1" },
-                    { "3", "Barcelona", "2" },
-                    { "4", "Malaga", "2" },
-                    { "5", "Bangkok", "3" },
-                    { "6", "Rayong", "3" }
+                    { 1, "Gothenburg", 1 },
+                    { 2, "Karlstad", 1 },
+                    { 3, "Barcelona", 2 },
+                    { 4, "Malaga", 2 },
+                    { 5, "Bangkok", 3 },
+                    { 6, "Rayong", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -91,9 +93,9 @@ namespace MVC.Migrations
                 columns: new[] { "Id", "CityId", "Name", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { "ade3ec65-0d96-4b19-996c-f74db0483ecd", "1", "Albert", "0765487028" },
-                    { "b44300bb-370b-4935-b303-05c206b7bc64", "3", "Berit", "0735648701" },
-                    { "e0528f4b-5b1f-4f45-b8b3-5d5d2b99f8e9", "1", "Hilda", "0756845297" }
+                    { "132ce40f-cba9-4cd6-a902-5e5a8599d277", 3, "Berit", "0735648701" },
+                    { "aff067dc-960f-4ecd-bd67-f127d54845ef", 1, "Hilda", "0756845297" },
+                    { "f298ae2d-6261-4c42-b6e3-7c3970306515", 1, "Albert", "0765487028" }
                 });
 
             migrationBuilder.CreateIndex(

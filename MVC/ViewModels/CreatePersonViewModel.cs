@@ -17,7 +17,7 @@ namespace MVC.ViewModels
         [Display(Name = "City of Residence")]
         public City City { get; set; }
 
-        public string CityId { get; set; }
+        public int CityId { get; set; }
 
 
     }

@@ -1,0 +1,18 @@
+﻿@model City
+
+@if (Model != null)
+{
+    <div class="row bg-light text-bg-light p-1">
+        <div class="col">
+            <h5>@Model.CityName</h5>
+        </div>
+        <div class="col">
+            <p>@Model.Country.CountryName</p>
+        </div>
+        <div class="col">
+           @* <a type="submit" class="btn btn-danger btn-sm" asp-controller="City" asp-action="DeleteCity" asp-route-id=@Model.CityId>Delete City</a>*@
+        </div>
+    </div>
+}
+
+

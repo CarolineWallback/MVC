@@ -76,14 +76,14 @@
 
 
 @*Add new person to list*@
-<div class="container add-person mt-5">
+<div class="container add-new mt-5">
     <form asp-controller="People" asp-action="CreatePerson" method="post">
         <h4 class="fw-bold mb-2">Add new person to list: </h4>
         <br />
 
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
-            <input class="input rounded border-light m-1 add-person-input" asp-for="Name" type="text" />
+            <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" />
         </div>
         <div class="validation">
             <span></span>
@@ -92,7 +92,7 @@
         
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.PhoneNumber)</label>
-            <input class="input rounded border-light m-1 add-person-input" asp-for="PhoneNumber" type="text" />
+            <input class="input rounded border-light m-1 add-new-input" asp-for="PhoneNumber" type="text" />
         </div>
         <div class="validation">
             <span></span>
@@ -101,7 +101,7 @@
         
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
-            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-person-input" asp-items="ViewBag.Cities"></select>
+            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" asp-items="ViewBag.Cities"></select>
         </div>
         <div class="validation">
             <span></span>

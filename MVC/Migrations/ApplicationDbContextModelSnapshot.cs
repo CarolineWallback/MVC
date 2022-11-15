@@ -23,16 +23,18 @@ namespace MVC.Migrations
 
             modelBuilder.Entity("MVC.Models.City", b =>
                 {
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
 
                     b.Property<string>("CityName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CountryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.HasKey("CityId");
 
@@ -43,46 +45,49 @@ namespace MVC.Migrations
                     b.HasData(
                         new
                         {
-                            CityId = "1",
+                            CityId = 1,
                             CityName = "Gothenburg",
-                            CountryId = "1"
+                            CountryId = 1
                         },
                         new
                         {
-                            CityId = "2",
+                            CityId = 2,
                             CityName = "Karlstad",
-                            CountryId = "1"
+                            CountryId = 1
                         },
                         new
                         {
-                            CityId = "3",
+                            CityId = 3,
                             CityName = "Barcelona",
-                            CountryId = "2"
+                            CountryId = 2
                         },
                         new
                         {
-                            CityId = "4",
+                            CityId = 4,
                             CityName = "Malaga",
-                            CountryId = "2"
+                            CountryId = 2
                         },
                         new
                         {
-                            CityId = "5",
+                            CityId = 5,
                             CityName = "Bangkok",
-                            CountryId = "3"
+                            CountryId = 3
                         },
                         new
                         {
-                            CityId = "6",
+                            CityId = 6,
                             CityName = "Rayong",
-                            CountryId = "3"
+                            CountryId = 3
                         });
                 });
 
             modelBuilder.Entity("MVC.Models.Country", b =>
                 {
-                    b.Property<string>("CountryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"));
 
                     b.Property<string>("CountryName")
                         .IsRequired()
@@ -95,17 +100,17 @@ namespace MVC.Migrations
                     b.HasData(
                         new
                         {
-                            CountryId = "1",
+                            CountryId = 1,
                             CountryName = "Sweden"
                         },
                         new
                         {
-                            CountryId = "2",
+                            CountryId = 2,
                             CountryName = "Spain"
                         },
                         new
                         {
-                            CountryId = "3",
+                            CountryId = 3,
                             CountryName = "Thailand"
                         });
                 });
@@ -113,11 +118,11 @@ namespace MVC.Migrations
             modelBuilder.Entity("MVC.Models.Person", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -136,22 +141,22 @@ namespace MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e0528f4b-5b1f-4f45-b8b3-5d5d2b99f8e9",
-                            CityId = "1",
+                            Id = "aff067dc-960f-4ecd-bd67-f127d54845ef",
+                            CityId = 1,
                             Name = "Hilda",
                             PhoneNumber = "0756845297"
                         },
                         new
                         {
-                            Id = "b44300bb-370b-4935-b303-05c206b7bc64",
-                            CityId = "3",
+                            Id = "132ce40f-cba9-4cd6-a902-5e5a8599d277",
+                            CityId = 3,
                             Name = "Berit",
                             PhoneNumber = "0735648701"
                         },
                         new
                         {
-                            Id = "ade3ec65-0d96-4b19-996c-f74db0483ecd",
-                            CityId = "1",
+                            Id = "f298ae2d-6261-4c42-b6e3-7c3970306515",
+                            CityId = 1,
                             Name = "Albert",
                             PhoneNumber = "0765487028"
                         });

@@ -1,0 +1,56 @@
+﻿@model CountryViewModel
+
+@{
+    ViewData["Title"] = "Countries";
+}
+
+@*Showing all people in the list*@
+<div class="container mt-5">
+    <div class="row bg-dark text-light fw-semibold p-1">
+        <div class="col p-1">
+            <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
+        </div>
+        <div class="col p-1">
+        </div>
+    </div>
+
+    @if (Model.Countries.Count == 0)
+    {
+
+        <h4 class="fst-italic m-3">No countries...</h4>
+    }
+    else
+    {
+        foreach (var city in Model.Countries)
+        {
+
+            <partial name="../Shared/_countryDetailsPartial.cshtml" model="city" />
+
+        }
+
+    }
+
+</div>
+
+
+@*Add new person to list*@
+<div class="container add-new mt-5">
+    <form asp-controller="Country" asp-action="CreateCountry" method="post">
+        <h4 class="fw-bold mb-2">Add new country: </h4>
+        <br />
+
+        <div class="form-row">
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
+            <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" />
+        </div>
+        <div class="validation">
+            <span></span>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div>
+            <input class="form-button btn btn-success m-1" type="submit" value="Add Country" />
+        </div>
+
+    </form>
+</div>

@@ -32,15 +32,13 @@ namespace MVC.Controllers
             ModelState.Remove("City");
             if (ModelState.IsValid)
             {
-                var id = Guid.NewGuid().ToString();
-                Person person = new Person(id, createPerson.Name, createPerson.PhoneNumber, createPerson.CityId);
+                Person person = new Person(createPerson.Name, createPerson.PhoneNumber, createPerson.CityId);
                 _context.People.Add(person);
                 _context.SaveChanges();
             }
             
             return RedirectToAction("PeopleList");
         }
-
 
         public IActionResult DeletePerson(string id)
         {
@@ -54,10 +52,9 @@ namespace MVC.Controllers
             return RedirectToAction("PeopleList");
         }
 
-        
         public IActionResult Search(PeopleViewModel peopleViewModel)
         {
-            if (peopleViewModel.Search != null)
+            if (!String.IsNullOrEmpty(peopleViewModel.Search))
             {
                 var search = peopleViewModel.Search;
 
@@ -80,9 +77,12 @@ namespace MVC.Controllers
                         }
                     }
                 }
-            }
 
-            ViewBag.Message = $"Showing {peopleViewModel.PeopleList.Count} result(s).";
+                ViewBag.Message = $"Showing {peopleViewModel.PeopleList.Count} result(s).";
+            }
+            else 
+                peopleViewModel.PeopleList = _context.People.Include(x => x.City).ToList();
+
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
 
             return View("PeopleList", peopleViewModel);
