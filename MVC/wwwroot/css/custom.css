@@ -36,10 +36,18 @@
 }
 
 
-.people .form-row, .validation {
+.add-person .form-row, .validation {
     display: flex;
     max-width: 500px;
     justify-content: space-between;
 }
+
+.add-person-input{
+    height: 35px;
+    width: 250px;
+}
+
+
+
 
 

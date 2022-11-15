@@ -6,20 +6,22 @@ namespace MVC.Models
     {
         [Key]
         public string Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string PhoneNumber { get; set; }
-        [Required]
-        public string City { get; set; }
+        public City City { get; set; }
+        public string CityId { get; set; }
 
-        public Person() { }
-        public Person(string Id, string Name, string PhoneNumber, string City)
+        public Person() 
+        {
+
+        }
+        public Person(string Id, string Name, string PhoneNumber, string CityId)
         {
             this.Id = Id;
             this.Name = Name;
             this.PhoneNumber = PhoneNumber;
-            this.City = City;
+            this.CityId = CityId;
+
         }
     }
 }

@@ -52,14 +52,14 @@
         </div>
     </div>
 
-    @if (Model.TempList.Count == 0)
+    @if (Model.PeopleList.Count == 0)
     {
         
         <h4 class="fst-italic m-3">No people in the list</h4>
     }
     else
     {
-        foreach(var person in Model.TempList)
+        foreach(var person in Model.PeopleList)
         {
            
             <partial name="../Shared/_personDetailsPartial.cshtml" model="person"/>
@@ -82,31 +82,31 @@
         <br />
 
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(model => model.Name)</label>
-            <input class="input rounded border-light m-1" asp-for="Name" type="text" />
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
+            <input class="input rounded border-light m-1 add-person-input" asp-for="Name" type="text" />
         </div>
         <div class="validation">
             <span></span>
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
-            <input class="input rounded border-light m-1" asp-for="PhoneNumber" type="text" />
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.PhoneNumber)</label>
+            <input class="input rounded border-light m-1 add-person-input" asp-for="PhoneNumber" type="text" />
         </div>
-            <div class="validation">
-                <span></span>
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
+        <div class="validation">
+            <span></span>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
         
-            <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(model => model.City)</label>
-            <input class="input rounded border-light m-1" asp-for="City" type="text" />
+        <div class="form-row">
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
+            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-person-input" asp-items="ViewBag.Cities"></select>
         </div>
-            <div class="validation">
-                <span></span>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
+        <div class="validation">
+            <span></span>
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
 
         <div>
             <input class="form-button btn btn-success m-1" type="submit" value="Add Person" />
