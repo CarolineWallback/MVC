@@ -22,21 +22,21 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "doctor",
-    pattern: "doctor",
-    defaults: new { controller = "Doctor", action = "FeverCheck" });
+//app.MapControllerRoute(
+//    name: "doctor",
+//    pattern: "doctor",
+//    defaults: new { controller = "Doctor", action = "FeverCheck" });
 
-app.MapControllerRoute(
-    name: "game",
-    pattern: "game",
-    defaults: new { controller = "GuessingGame", action = "GuessingGame" });
+//app.MapControllerRoute(
+//    name: "game",
+//    pattern: "game",
+//    defaults: new { controller = "GuessingGame", action = "GuessingGame" });
 
-app.MapControllerRoute(
-    name: "people",
-    pattern: "people",
-    defaults: new { controller = "People", action = "PeopleList" });
+//app.MapControllerRoute(
+//    name: "people",
+//    pattern: "people",
+//    defaults: new { controller = "People", action = "PeopleList" });
 
-app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=About}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=People}/{action=PeopleList}/{id?}");
 
 app.Run();

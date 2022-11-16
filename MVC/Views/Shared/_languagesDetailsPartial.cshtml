@@ -1,0 +1,19 @@
+﻿@model Language
+
+@if (Model != null)
+{
+    <div class="row bg-light text-bg-light p-1">
+        <div class="col d-flex justify-content-between">
+            <div>
+                <h5>@Model.LanguageName</h5>
+            </div>
+
+            <div>
+                <a type="submit" class="btn btn-success btn-sm" asp-controller="Language" asp-action="ViewPeopleWithLanguage" asp-route-id=@Model.LanguageId>View People</a>
+                <a type="submit" class="btn btn-danger btn-sm" asp-controller="Language" asp-action="DeleteLanguage" asp-route-id=@Model.LanguageId>Delete Language</a>
+            </div>
+        </div>
+    </div>
+}
+
+

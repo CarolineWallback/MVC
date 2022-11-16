@@ -19,10 +19,11 @@ namespace MVC.Controllers
         {
             PeopleViewModel peopleViewModel = new()
             {
-                PeopleList = _context.People.Include(x => x.City).ToList(),
+                PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList(),
             };
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
             return View(peopleViewModel);
         }
 
@@ -30,11 +31,21 @@ namespace MVC.Controllers
         public IActionResult CreatePerson(CreatePersonViewModel createPerson)
         {
             ModelState.Remove("City");
+            ModelState.Remove("Languages");
             if (ModelState.IsValid)
             {
-                Person person = new Person(createPerson.Name, createPerson.PhoneNumber, createPerson.CityId);
-                var City = _context.Cities.Find(createPerson.CityId);
-                person.City = City;
+                var city = _context.Cities.Find(createPerson.CityId);
+                var languages = _context.Languages.Where(x => createPerson.LanguageIds.Contains(x.LanguageId)).ToList();
+
+                Person person = new()
+                {
+                    Name = createPerson.Name,
+                    PhoneNumber = createPerson.PhoneNumber,
+                    CityId = createPerson.CityId,
+                    City = city,
+                    Languages = languages
+                };
+                   
                 _context.People.Add(person);
                 _context.SaveChanges();
             }
@@ -86,17 +97,60 @@ namespace MVC.Controllers
                 peopleViewModel.PeopleList = _context.People.Include(x => x.City).ToList();
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
 
             return View("PeopleList", peopleViewModel);
         }
 
         public IActionResult SortPeople(PeopleViewModel peopleViewModel)
         {
-            peopleViewModel.PeopleList = _context.People.Include(x => x.City).ToList();
+            peopleViewModel.PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList();
             peopleViewModel.PeopleList.Sort((x, y) => string.Compare(x.Name, y.Name));
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
             return View("PeopleList", peopleViewModel);
+        }
+
+        public IActionResult UpdatePerson(string id)
+        {
+            Person person = _context.People.Include(x => x.City).Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
+            List<int> languageIds = new();
+            foreach(var language in person.Languages)
+            {
+                languageIds.Add(language.LanguageId);
+            }
+            
+            CreatePersonViewModel createPerson = new()
+            {
+                Id = person.Id,
+                Name = person.Name,
+                PhoneNumber = person.PhoneNumber,
+                City = person.City,
+                CityId = person.CityId,
+                LanguageIds = languageIds
+            };
+
+            ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
+            return View(createPerson);
+        }
+
+        public IActionResult SavePerson(string id, CreatePersonViewModel createPerson)
+        {
+            var city = _context.Cities.Find(createPerson.CityId);
+            var languages = _context.Languages.Where(x => createPerson.LanguageIds.Contains(x.LanguageId)).ToList();
+
+            Person person = _context.People.Include(x => x.Languages).FirstOrDefault(x => x.Id == id);
+          
+            person.Name = createPerson.Name;
+            person.PhoneNumber = createPerson.PhoneNumber;
+            person.City = city;
+            person.Languages = languages;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("PeopleList");
         }
     }
 }

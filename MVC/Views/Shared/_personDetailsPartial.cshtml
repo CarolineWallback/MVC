@@ -13,6 +13,16 @@
             <p>@Model.City.CityName</p>
         </div>
         <div class="col">
+            <ul>
+
+            @foreach(var language in Model.Languages)
+            {
+                <li>@language.LanguageName</li>
+            }
+            </ul>
+        </div>
+        <div class="col">
+            <a type="submit" class="btn btn-primary btn-sm" asp-controller="People" asp-action="UpdatePerson" asp-route-id=@Model.Id>Update Person</a>
             <a type="submit" class="btn btn-danger btn-sm" asp-controller="People" asp-action="DeletePerson" asp-route-id=@Model.Id>Delete Person</a>
         </div>
      </div>  

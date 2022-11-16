@@ -16,7 +16,7 @@ namespace MVC.Controllers
         }
         public IActionResult CountryList()
         {
-            CountryViewModel countryViewModel = new CountryViewModel()
+            CountryViewModel countryViewModel = new()
             {
                 Countries = _context.Countries.ToList()
             };
@@ -29,7 +29,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Country country = new Country()
+                Country country = new()
                 {
                     CountryName = countryViewModel.Name,
                 };

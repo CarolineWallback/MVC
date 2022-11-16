@@ -11,17 +11,8 @@ namespace MVC.Models
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public City City { get; set; }
-        public int? CityId { get; set; }
+        public int CityId { get; set; }
+        public List<Language> Languages { get; set; } = new();
 
-        public Person() 
-        {
-
-        }
-        public Person(string Name, string PhoneNumber, int CityId)
-        {
-            this.Name = Name;
-            this.PhoneNumber = PhoneNumber;
-            this.CityId = CityId;
-        }
     }
 }

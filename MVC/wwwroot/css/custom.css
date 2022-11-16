@@ -42,12 +42,19 @@
     justify-content: space-between;
 }
 
-.add-new-input{
+.add-new-input {
     height: 35px;
     width: 250px;
 }
 
+.add-languages{
+    width: 250px;
+    max-height: 100px;
+}
 
+.row{
+    border: 1px solid black;
+}
 
 
 

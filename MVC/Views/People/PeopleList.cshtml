@@ -48,8 +48,9 @@
              <h4>@Html.DisplayNameFor(Model => Model.City)</h4>
         </div>
         <div class="col p-1">
-            
+             <h4>@Html.DisplayNameFor(Model => Model.Languages)</h4>
         </div>
+        <div class="col p-1"></div>
     </div>
 
     @if (Model.PeopleList.Count == 0)
@@ -107,6 +108,14 @@
             <span></span>
             <span asp-validation-for="City" class="text-danger"></span>
         </div>
+            <div class="form-row">
+                <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Languages)</label>
+                <select name="LanguageIds" asp-for="LanguageIds" asp-items="ViewBag.Languages" class="input rounded border-light m-1 add-languages" multiple></select>
+            </div>
+            <div class="validation">
+                <span></span>
+                <span asp-validation-for="Languages" class="text-danger"></span>
+            </div>
 
         <div>
             <input class="form-button btn btn-success m-1" type="submit" value="Add Person" />
