@@ -72,7 +72,7 @@ namespace MVC.Controllers
                 var search = peopleViewModel.Search;
 
 
-                foreach (var person in _context.People.Include(x => x.City).ToList())
+                foreach (var person in _context.People.Include(x => x.City).Include(x => x.Languages).ToList())
                 {
                     if (!peopleViewModel.CaseSensitive)
                     {
