@@ -32,6 +32,7 @@ namespace MVC.Controllers
         [HttpPost]
         public IActionResult CreatePerson(CreatePersonViewModel createPerson)
         {
+            ModelState.Remove("id");
             ModelState.Remove("City");
             ModelState.Remove("Languages");
             if (ModelState.IsValid)
