@@ -94,7 +94,7 @@ namespace MVC.Controllers
                 ViewBag.Message = $"Showing {peopleViewModel.PeopleList.Count} result(s).";
             }
             else 
-                peopleViewModel.PeopleList = _context.People.Include(x => x.City).ToList();
+                peopleViewModel.PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList();
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
             ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
