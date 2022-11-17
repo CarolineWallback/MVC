@@ -1,13 +1,16 @@
 ﻿@model City
 
-@if (Model != null)
+@if (!String.IsNullOrEmpty(Model.CityName))
 {
     <div class="row bg-light text-bg-light p-1">
         <div class="col">
             <h5>@Model.CityName</h5>
         </div>
         <div class="col">
-            <p>@Model.Country.CountryName</p>
+            @if(Model.Country != null)
+            {
+                <p>@Model.Country.CountryName</p>
+            }
         </div>
         <div class="col-3">
             <a type="submit" class="btn btn-success btn-sm" asp-controller="City" asp-action="ViewCitizens" asp-route-id=@Model.CityId>View citizens</a>

@@ -58,10 +58,13 @@
 
 .list-button {
     margin-top: 1px;
-    width: 55px;
+    width: 100%;
 }
 
 @media screen and (max-width: 991px) {
+    .col{
+        padding: 0;
+    }
     .row h4{
         font-size : 18px;
     }
@@ -71,6 +74,6 @@
     }
 
     .row li, p{
-        font-size: 16px;
+        font-size: 14px;
     }
 }
