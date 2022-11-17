@@ -45,7 +45,7 @@ namespace MVC.Migrations
                     CityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: false)
+                    CountryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,8 +54,7 @@ namespace MVC.Migrations
                         name: "FK_Cities_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "CountryId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CountryId");
                 });
 
             migrationBuilder.CreateTable(
@@ -102,6 +101,11 @@ namespace MVC.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "CityId", "CityName", "CountryId" },
+                values: new object[] { -1, "", null });
+
+            migrationBuilder.InsertData(
                 table: "Countries",
                 columns: new[] { "CountryId", "CountryName" },
                 values: new object[,]
@@ -140,9 +144,9 @@ namespace MVC.Migrations
                 columns: new[] { "Id", "CityId", "Name", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { "17d0b080-fdee-401a-8329-78d53abb99d9", 1, "Hilda", "0756845297" },
-                    { "27f5b35a-a983-4dd9-97c7-56eb6255de4b", 3, "Alberto", "0735648701" },
-                    { "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c", 2, "Gun", "0765487028" }
+                    { "31e695e3-c37e-498d-bb36-3162545370a6", 1, "Hilda", "0756845297" },
+                    { "b4e75096-6520-4d24-aebb-303258213299", 3, "Alberto", "0735648701" },
+                    { "d435d9e3-3ade-4e1a-a15d-2452c68cab42", 3, "Gun", "0765487028" }
                 });
 
             migrationBuilder.InsertData(
@@ -150,12 +154,12 @@ namespace MVC.Migrations
                 columns: new[] { "LanguagesLanguageId", "PeopleId" },
                 values: new object[,]
                 {
-                    { 1, "17d0b080-fdee-401a-8329-78d53abb99d9" },
-                    { 1, "27f5b35a-a983-4dd9-97c7-56eb6255de4b" },
-                    { 1, "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c" },
-                    { 2, "17d0b080-fdee-401a-8329-78d53abb99d9" },
-                    { 2, "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c" },
-                    { 3, "27f5b35a-a983-4dd9-97c7-56eb6255de4b" }
+                    { 1, "31e695e3-c37e-498d-bb36-3162545370a6" },
+                    { 1, "b4e75096-6520-4d24-aebb-303258213299" },
+                    { 1, "d435d9e3-3ade-4e1a-a15d-2452c68cab42" },
+                    { 2, "31e695e3-c37e-498d-bb36-3162545370a6" },
+                    { 2, "d435d9e3-3ade-4e1a-a15d-2452c68cab42" },
+                    { 3, "b4e75096-6520-4d24-aebb-303258213299" }
                 });
 
             migrationBuilder.CreateIndex(

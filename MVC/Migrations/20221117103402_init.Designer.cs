@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221116104709_init")]
+    [Migration("20221117103402_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -43,32 +43,32 @@ namespace MVC.Migrations
                         new
                         {
                             LanguagesLanguageId = 1,
-                            PeopleId = "17d0b080-fdee-401a-8329-78d53abb99d9"
+                            PeopleId = "31e695e3-c37e-498d-bb36-3162545370a6"
                         },
                         new
                         {
                             LanguagesLanguageId = 1,
-                            PeopleId = "27f5b35a-a983-4dd9-97c7-56eb6255de4b"
+                            PeopleId = "b4e75096-6520-4d24-aebb-303258213299"
                         },
                         new
                         {
                             LanguagesLanguageId = 1,
-                            PeopleId = "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c"
+                            PeopleId = "d435d9e3-3ade-4e1a-a15d-2452c68cab42"
                         },
                         new
                         {
                             LanguagesLanguageId = 2,
-                            PeopleId = "17d0b080-fdee-401a-8329-78d53abb99d9"
+                            PeopleId = "31e695e3-c37e-498d-bb36-3162545370a6"
                         },
                         new
                         {
                             LanguagesLanguageId = 2,
-                            PeopleId = "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c"
+                            PeopleId = "d435d9e3-3ade-4e1a-a15d-2452c68cab42"
                         },
                         new
                         {
                             LanguagesLanguageId = 3,
-                            PeopleId = "27f5b35a-a983-4dd9-97c7-56eb6255de4b"
+                            PeopleId = "b4e75096-6520-4d24-aebb-303258213299"
                         });
                 });
 
@@ -84,7 +84,7 @@ namespace MVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.HasKey("CityId");
@@ -94,6 +94,11 @@ namespace MVC.Migrations
                     b.ToTable("Cities");
 
                     b.HasData(
+                        new
+                        {
+                            CityId = -1,
+                            CityName = ""
+                        },
                         new
                         {
                             CityId = 1,
@@ -231,22 +236,22 @@ namespace MVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "17d0b080-fdee-401a-8329-78d53abb99d9",
+                            Id = "31e695e3-c37e-498d-bb36-3162545370a6",
                             CityId = 1,
                             Name = "Hilda",
                             PhoneNumber = "0756845297"
                         },
                         new
                         {
-                            Id = "27f5b35a-a983-4dd9-97c7-56eb6255de4b",
+                            Id = "b4e75096-6520-4d24-aebb-303258213299",
                             CityId = 3,
                             Name = "Alberto",
                             PhoneNumber = "0735648701"
                         },
                         new
                         {
-                            Id = "90675b8a-d72a-4ce1-bfdd-b5f8327aab1c",
-                            CityId = 2,
+                            Id = "d435d9e3-3ade-4e1a-a15d-2452c68cab42",
+                            CityId = 3,
                             Name = "Gun",
                             PhoneNumber = "0765487028"
                         });
@@ -271,9 +276,7 @@ namespace MVC.Migrations
                 {
                     b.HasOne("MVC.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

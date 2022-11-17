@@ -9,7 +9,7 @@ namespace MVC.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountryId { get; set; }
         public string CountryName { get; set; }
-        public List<City> Cities { get; set; } = new List<City>();
+        public List<City>? Cities { get; set; } = new List<City>();
     }
         
 }

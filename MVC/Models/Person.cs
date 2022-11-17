@@ -10,9 +10,9 @@ namespace MVC.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
-        public City City { get; set; }
-        public int CityId { get; set; }
-        public List<Language> Languages { get; set; } = new();
+        public City? City { get; set; }
+        public int? CityId { get; set; }
+        public List<Language>? Languages { get; set; } = new();
 
     }
 }

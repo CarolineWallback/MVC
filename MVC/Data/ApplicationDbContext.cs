@@ -32,6 +32,7 @@ namespace MVC.Data
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 2, CountryName = "Spain" });
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 3, CountryName = "Thailand"});
 
+            modelBuilder.Entity<City>().HasData(new City { CityId = -1, CityName = "" });
             modelBuilder.Entity<City>().HasData(new City { CityId = 1, CityName = "Gothenburg", CountryId = 1});
             modelBuilder.Entity<City>().HasData(new City { CityId = 2, CityName = "Karlstad", CountryId = 1 });
             modelBuilder.Entity<City>().HasData(new City { CityId = 3, CityName = "Barcelona", CountryId = 2 });
@@ -45,7 +46,7 @@ namespace MVC.Data
 
             modelBuilder.Entity<Person>().HasData(new Person { Id = personId1, Name = "Hilda", PhoneNumber = "0756845297", CityId = 1 });
             modelBuilder.Entity<Person>().HasData(new Person { Id = personId2, Name = "Alberto", PhoneNumber = "0735648701", CityId = 3 });
-            modelBuilder.Entity<Person>().HasData(new Person { Id = personId3, Name = "Gun", PhoneNumber = "0765487028", CityId = 2 });
+            modelBuilder.Entity<Person>().HasData(new Person { Id = personId3, Name = "Gun", PhoneNumber = "0765487028", CityId = 3 });
 
             //English
             modelBuilder.Entity<Person>()

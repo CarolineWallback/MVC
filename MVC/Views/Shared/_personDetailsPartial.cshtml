@@ -10,10 +10,16 @@
             <p>@Model.PhoneNumber</p>
         </div>
         <div class="col">
-            <p>@Model.City.CityName</p>
+            @if(Model.City != null)
+            {
+                <p>@Model.City.CityName</p>
+            }
         </div>
         <div class="col">
-            <p>@Model.City.Country.CountryName</p>
+            @if (Model.City != null && Model.City.Country != null)
+            {
+                <p>@Model.City.Country.CountryName</p>
+            }
         </div>
         <div class="col">
             <ul>

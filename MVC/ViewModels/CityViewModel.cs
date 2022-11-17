@@ -12,9 +12,8 @@ namespace MVC.ViewModels
         public string Name { get; set; }
 
         [Display(Name = "Country")]
-        [Required]
-        public Country Country { get; set; }
+        public Country? Country { get; set; }
 
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
     }
 }

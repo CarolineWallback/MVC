@@ -38,7 +38,9 @@ namespace MVC.Controllers
             if (ModelState.IsValid)
             {
                 var city = _context.Cities.Find(createPerson.CityId);
-                var languages = _context.Languages.Where(x => createPerson.LanguageIds.Contains(x.LanguageId)).ToList();
+                List<Language> languages = new();
+                if (createPerson.LanguageIds != null)
+                    languages = _context.Languages.Where(x => createPerson.LanguageIds.Contains(x.LanguageId)).ToList();
 
                 Person person = new()
                 {
