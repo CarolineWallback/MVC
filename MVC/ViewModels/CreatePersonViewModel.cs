@@ -8,7 +8,7 @@ namespace MVC.ViewModels
     {
         public string Id { get; set; }
 
-        [Display(Name = "Full Name")]
+        [Display(Name = "Name")]
         [Required]
         public string Name { get; set; }
 

@@ -56,5 +56,21 @@
     border: 1px solid black;
 }
 
+.list-button {
+    margin-top: 1px;
+    width: 55px;
+}
 
+@media screen and (max-width: 991px) {
+    .row h4{
+        font-size : 18px;
+    }
 
+    .row h5{
+        font-size : 18px;
+    }
+
+    .row li, p{
+        font-size: 16px;
+    }
+}

@@ -19,7 +19,9 @@ namespace MVC.Controllers
         {
             PeopleViewModel peopleViewModel = new()
             {
-                PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList(),
+                PeopleList = _context.People
+                .Include(x => x.City.Country)
+                .Include(x => x.Languages).ToList(),
             };
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
@@ -72,7 +74,7 @@ namespace MVC.Controllers
                 var search = peopleViewModel.Search;
 
 
-                foreach (var person in _context.People.Include(x => x.City).Include(x => x.Languages).ToList())
+                foreach (var person in _context.People.Include(x => x.City.Country).Include(x => x.Languages).ToList())
                 {
                     if (!peopleViewModel.CaseSensitive)
                     {
@@ -94,7 +96,7 @@ namespace MVC.Controllers
                 ViewBag.Message = $"Showing {peopleViewModel.PeopleList.Count} result(s).";
             }
             else 
-                peopleViewModel.PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList();
+                peopleViewModel.PeopleList = _context.People.Include(x => x.City.Country).Include(x => x.Languages).ToList();
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
             ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
@@ -104,7 +106,7 @@ namespace MVC.Controllers
 
         public IActionResult SortPeople(PeopleViewModel peopleViewModel)
         {
-            peopleViewModel.PeopleList = _context.People.Include(x => x.City).Include(x => x.Languages).ToList();
+            peopleViewModel.PeopleList = _context.People.Include(x => x.City.Country).Include(x => x.Languages).ToList();
             peopleViewModel.PeopleList.Sort((x, y) => string.Compare(x.Name, y.Name));
 
             ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
@@ -126,7 +128,6 @@ namespace MVC.Controllers
                 Id = person.Id,
                 Name = person.Name,
                 PhoneNumber = person.PhoneNumber,
-                City = person.City,
                 CityId = person.CityId,
                 LanguageIds = languageIds
             };

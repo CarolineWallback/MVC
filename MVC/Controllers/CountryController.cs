@@ -45,6 +45,13 @@ namespace MVC.Controllers
             Country countryFromId = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == id);
             if (countryFromId != null)
             {
+                foreach(var city in countryFromId.Cities)
+                {
+                    City cityToRemove = _context.Cities.Include(x => x.People).FirstOrDefault(x => x.CityId == city.CityId);
+                    _context.Cities.Remove(cityToRemove);
+                    
+               
+                }
                 _context.Countries.Remove(countryFromId);
                 _context.SaveChanges();
             }

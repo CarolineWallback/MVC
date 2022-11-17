@@ -48,9 +48,12 @@
              <h4>@Html.DisplayNameFor(Model => Model.City)</h4>
         </div>
         <div class="col p-1">
+            <h4>@Html.DisplayNameFor(Model => Model.City.Country)</h4>
+        </div>
+        <div class="col p-1">
              <h4>@Html.DisplayNameFor(Model => Model.Languages)</h4>
         </div>
-        <div class="col p-1"></div>
+        <div class="col"></div>
     </div>
 
     @if (Model.PeopleList.Count == 0)

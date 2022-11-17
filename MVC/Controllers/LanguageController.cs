@@ -57,7 +57,7 @@ namespace MVC.Controllers
             PeopleViewModel peopleViewModel = new()
             {
                 PeopleList = _context.People
-                .Include(x => x.City)
+                .Include(x => x.City.Country)
                 .Include(x => x.Languages)
                 .Where(x => x.Languages.Contains(language)).ToList()
             };

@@ -62,7 +62,7 @@ namespace MVC.Controllers
         public IActionResult ViewCitizens(int id)
         {
             PeopleViewModel peopleViewModel = new();
-            peopleViewModel.PeopleList = _context.People.Include(x => x.City).Where(x => x.CityId == id).ToList();
+            peopleViewModel.PeopleList = _context.People.Include(x => x.City.Country).Include(x => x.Languages).Where(x => x.CityId == id).ToList();
 
             return View(peopleViewModel);
         }

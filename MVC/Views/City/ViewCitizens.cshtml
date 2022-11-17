@@ -11,21 +11,25 @@
 }
 else
 {
-    
     <h2>Citizens of @Model.PeopleList.First().City.CityName</h2>
-    <div class="row bg-dark text-light fw-semibold p-1 mt-3">
-        <div class="col p-1">
-            <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
+        <div class="row bg-dark text-light fw-semibold p-1">
+            <div class="col p-1">
+                <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
+            </div>
+            <div class="col p-1">
+                <h4>@Html.DisplayNameFor(Model => Model.PhoneNumber)</h4>
+            </div>
+            <div class="col p-1">
+                <h4>@Html.DisplayNameFor(Model => Model.City)</h4>
+            </div>
+            <div class="col p-1">
+                <h4>@Html.DisplayNameFor(Model => Model.City.Country)</h4>
+            </div>
+            <div class="col p-1">
+                <h4>@Html.DisplayNameFor(Model => Model.Languages)</h4>
+            </div>
+            <div class="col"></div>
         </div>
-        <div class="col p-1">
-            <h4>@Html.DisplayNameFor(Model => Model.PhoneNumber)</h4>
-        </div>
-        <div class="col p-1">
-            <h4>@Html.DisplayNameFor(Model => Model.City)</h4>
-        </div>
-        <div class="col p-1">
-        </div>
-    </div>
         
     foreach (var person in Model.PeopleList)
     {
