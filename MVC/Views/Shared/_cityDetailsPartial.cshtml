@@ -11,6 +11,10 @@
             {
                 <p>@Model.Country.CountryName</p>
             }
+            else
+            {
+                <p class="fst-italic">N/A</p>
+            }
         </div>
         <div class="col-3">
             <a type="submit" class="btn btn-success btn-sm" asp-controller="City" asp-action="ViewCitizens" asp-route-id=@Model.CityId>View citizens</a>

@@ -32,7 +32,6 @@ namespace MVC.Data
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 2, CountryName = "Spain" });
             modelBuilder.Entity<Country>().HasData(new Country { CountryId = 3, CountryName = "Thailand"});
 
-            modelBuilder.Entity<City>().HasData(new City { CityId = -1, CityName = "" });
             modelBuilder.Entity<City>().HasData(new City { CityId = 1, CityName = "Gothenburg", CountryId = 1});
             modelBuilder.Entity<City>().HasData(new City { CityId = 2, CityName = "Karlstad", CountryId = 1 });
             modelBuilder.Entity<City>().HasData(new City { CityId = 3, CityName = "Barcelona", CountryId = 2 });

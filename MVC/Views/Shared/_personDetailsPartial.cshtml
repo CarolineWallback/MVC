@@ -14,11 +14,19 @@
             {
                 <p>@Model.City.CityName</p>
             }
+            else
+            {
+                <p class="fst-italic">N/A</p>
+            }
         </div>
         <div class="col">
             @if (Model.City != null && Model.City.Country != null)
             {
                 <p>@Model.City.Country.CountryName</p>
+            }
+            else
+            {
+                <p class="fst-italic">N/A</p>
             }
         </div>
         <div class="col">

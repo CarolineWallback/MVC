@@ -38,8 +38,11 @@
 
 .add-new .form-row, .validation {
     display: flex;
-    max-width: 500px;
-    justify-content: space-between;
+    
+}
+
+.add-new label {
+    min-width: 200px;
 }
 
 .add-new-input {
