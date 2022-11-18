@@ -89,19 +89,12 @@
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
             <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" required/>
         </div>
-@*        <div class="validation">
-            <span></span>
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>*@
         
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.PhoneNumber)</label>
             <input class="input rounded border-light m-1 add-new-input" asp-for="PhoneNumber" type="text" required />
         </div>
-        @*<div class="validation">
-            <span></span>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>*@
+
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
             <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" onchange="ViewCities()" required>
@@ -116,10 +109,7 @@
                     <option value="">Select City</option>
             </select>
         </div>
-        @*<div class="validation">
-            <span></span>
-            <span asp-validation-for="City" class="text-danger"></span>
-        </div>*@
+
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Languages)</label>
             <select name="LanguageIds" asp-for="LanguageIds" asp-items="ViewBag.Languages" class="input rounded border-light m-1 add-languages" multiple>
@@ -134,44 +124,6 @@
 </div>
 </div>
 
-<script>
-    function ViewCities() {
-
-        let countryId = $("#country").val();
-        let cityElement = $("#city");
-
-        $.ajax({
-            type: "POST",
-            url: "/People/GetCitySelectList?id=" + countryId,
-            success: function (response) {
-
-                if(response.length > 0)
-                {
-                    $(cityElement).removeAttr("disabled");
-                    cityElement.empty().append('<option selected="selected" value="0">Select City</option>');
-
-                    $.each(response, function () {
-                        $(city).append($("<option></option>").val(this.value).html(this.text));
-
-                    });
-                }
-                else
-                {
-                    cityElement.empty().append('<option selected="selected" value="0">No citites here</option>');
-                    $(cityElement).attr("disabled", "disabled");
-
-                }
-
-                
-            
-               
-
-            },
-        });
-    }
-
-   
-</script>
 
 
 

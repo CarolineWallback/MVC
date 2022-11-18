@@ -21,8 +21,13 @@
         </div>
 
         <div class="form-row">
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
+            <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" selected="@Model.CountryId" onchange="ViewCities()" required></select>
+        </div>
+
+        <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
-            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" asp-items="ViewBag.Cities" selected="@Model.CityId"></select>
+            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" id="city" asp-items="Model.cities" selected="@Model.CityId"></select>
         </div>
 
         <div class="form-row">

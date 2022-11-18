@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
+using System.Diagnostics.Metrics;
 
 namespace MVC.Controllers
 {
@@ -32,6 +34,9 @@ namespace MVC.Controllers
         [HttpPost]
         public JsonResult GetCitySelectList(string id)
         {
+            if (id == null)
+                return Json(null);
+
             var countryId = int.Parse(id);
             Country country = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == countryId);
 
@@ -120,8 +125,8 @@ namespace MVC.Controllers
             else 
                 peopleViewModel.PeopleList = _context.People.Include(x => x.City.Country).Include(x => x.Languages).ToList();
 
-            ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
-            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
+            ViewBag.Countries = new SelectList(_context.Countries.OrderBy(x => x.CountryName), "CountryId", "CountryName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages.OrderBy(x => x.LanguageName), "LanguageId", "LanguageName");
 
             return View("PeopleList", peopleViewModel);
         }
@@ -131,8 +136,8 @@ namespace MVC.Controllers
             peopleViewModel.PeopleList = _context.People.Include(x => x.City.Country).Include(x => x.Languages).ToList();
             peopleViewModel.PeopleList.Sort((x, y) => string.Compare(x.Name, y.Name));
 
-            ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
-            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
+            ViewBag.Countries = new SelectList(_context.Countries.OrderBy(x => x.CountryName), "CountryId", "CountryName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages.OrderBy(x => x.LanguageName), "LanguageId", "LanguageName");
             return View("PeopleList", peopleViewModel);
         }
 
@@ -145,16 +150,25 @@ namespace MVC.Controllers
                 languageIds.Add(language.LanguageId);
             }
             
+            var countries = _context.Countries.Include(x => x.Cities).OrderBy(x => x.CountryName);
+
             CreatePersonViewModel createPerson = new()
             {
                 Id = person.Id,
                 Name = person.Name,
                 PhoneNumber = person.PhoneNumber,
+                CountryId = person.City.CountryId,
                 CityId = person.CityId,
-                LanguageIds = languageIds
+                LanguageIds = languageIds,
+                cities = (from city in countries.FirstOrDefault(x => x.CountryId == person.City.CountryId).Cities.OrderBy(x => x.CityName)
+                          select new SelectListItem
+                          {
+                              Value = city.CityId.ToString(),
+                              Text = city.CityName
+                          }).ToList()
             };
 
-            ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
+            ViewBag.Countries = new SelectList(countries, "CountryId", "CountryName");
             ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
             return View(createPerson);
         }
