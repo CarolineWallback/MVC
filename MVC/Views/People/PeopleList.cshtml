@@ -104,12 +104,17 @@
         </div>*@
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
-            <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" onchange="ViewCities()" required></select>
+            <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" onchange="ViewCities()" required>
+                    <option value="">Select Country</option>
+            </select>
+        
         </div>
         
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
-            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" id="city" asp-items="ViewBag.Cities" required></select>
+            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" id="city" asp-items="Model.cities" required>
+                    <option value="">Select City</option>
+            </select>
         </div>
         @*<div class="validation">
             <span></span>
@@ -117,7 +122,8 @@
         </div>*@
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Languages)</label>
-            <select name="LanguageIds" asp-for="LanguageIds" asp-items="ViewBag.Languages" class="input rounded border-light m-1 add-languages" multiple></select>
+            <select name="LanguageIds" asp-for="LanguageIds" asp-items="ViewBag.Languages" class="input rounded border-light m-1 add-languages" multiple>
+            </select>
         </div>
 
         <div>
@@ -132,41 +138,40 @@
     function ViewCities() {
 
         let countryId = $("#country").val();
-        let city = $("#city");
+        let cityElement = $("#city");
 
         $.ajax({
             type: "POST",
             url: "/People/GetCitySelectList?id=" + countryId,
             success: function (response) {
 
-            const cities = JSON.stringify(response);
+                if(response.length > 0)
+                {
+                    $(cityElement).removeAttr("disabled");
+                    cityElement.empty().append('<option selected="selected" value="0">Select City</option>');
 
-                response.forEach(function (data) {
-                    console.log(data);
-                    
-                });
+                    $.each(response, function () {
+                        $(city).append($("<option></option>").val(this.value).html(this.text));
+
+                    });
+                }
+                else
+                {
+                    cityElement.empty().append('<option selected="selected" value="0">No citites here</option>');
+                    $(cityElement).attr("disabled", "disabled");
+
+                }
+
+                
             
                
 
             },
         });
     }
+
+   
 </script>
 
-@*<script>
 
-    
-
-    //function PopulateDropdown(list) {
-    //    alert("populate");
-    //    console.log(list);
-    //    if (list != null && list.length > 0) {
-    //        $each(list, function () {
-    //            $(city).append($("<option></option>").valueOf(this['Value']).html(this.['Text']));
-    //        });
-    //    }
-
-
-    //}
-</script>*@
 

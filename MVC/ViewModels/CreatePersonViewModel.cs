@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Models;
 using System.ComponentModel.DataAnnotations;
+using MVC.Models;
 
 namespace MVC.ViewModels
 {
@@ -25,8 +26,13 @@ namespace MVC.ViewModels
         [Display(Name = "Languages")]
         [Required]
         public List<Language>? Languages { get; set; } 
-        public List<int>? LanguageIds { get; set; } 
+        public List<int>? LanguageIds { get; set; }
 
+        public List<SelectListItem> cities { get; set; }
+        public CreatePersonViewModel ()
+        {
+            this.cities = new List<SelectListItem>();
+        }
 
 
     }

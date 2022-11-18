@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
-using Newtonsoft.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace MVC.Controllers
 {
@@ -26,10 +24,7 @@ namespace MVC.Controllers
                 .Include(x => x.Languages).ToList(),
             };
 
-            List<Country> countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
-
-            ViewBag.Countries = new SelectList(countries, "CountryId", "CountryName");
-            ViewBag.Cities = new SelectList(countries.First().Cities.OrderBy(x => x.CityName), "CityId", "CityName");
+            ViewBag.Countries = new SelectList(_context.Countries.OrderBy(x => x.CountryName), "CountryId", "CountryName");
             ViewBag.Languages = new MultiSelectList(_context.Languages.OrderBy(x => x.LanguageName), "LanguageId", "LanguageName");
             return View(peopleViewModel);
         }
@@ -40,20 +35,17 @@ namespace MVC.Controllers
             var countryId = int.Parse(id);
             Country country = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == countryId);
 
-            List<CityDTO> citites = new();
-
-            foreach (var city in country.Cities.OrderBy(x => x.CityName).ToList())
+            CreatePersonViewModel createPerson = new()
             {
-                CityDTO cityDto = new()
-                {
-                    CityId = city.CityId,
-                    CityName = city.CityName
+                cities = (from city in country.Cities.OrderBy(x => x.CityName)
+                          select new SelectListItem
+                          {
+                              Value = city.CityId.ToString(),
+                              Text = city.CityName
+                          }).ToList()
+            };
 
-                };
-                citites.Add(cityDto);
-            }
-
-            return Json(citites);
+            return Json(createPerson.cities);
         }
 
         [HttpPost]
@@ -62,7 +54,7 @@ namespace MVC.Controllers
             ModelState.Remove("id");
             ModelState.Remove("City");
             ModelState.Remove("Languages");
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && createPerson.CityId > 0)
             {
                 var city = _context.Cities.Find(createPerson.CityId);
                 List<Language> languages = new();
