@@ -129,23 +129,44 @@
 </div>
 
 <script>
+    function ViewCities() {
 
-    function ViewCities(){
-        const countryId = document.getElementById('country').value;
-        alert(countryId);
-
-        const city = document.getElementById('city');
-        
+        let countryId = $("#country").val();
+        let city = $("#city");
 
         $.ajax({
             type: "POST",
             url: "/People/GetCitySelectList?id=" + countryId,
             success: function (response) {
-                
-                console.log(response.json)
-            },
 
+            const cities = JSON.stringify(response);
+
+                response.forEach(function (data) {
+                    console.log(data);
+                    
+                });
+            
+               
+
+            },
         });
     }
 </script>
+
+@*<script>
+
+    
+
+    //function PopulateDropdown(list) {
+    //    alert("populate");
+    //    console.log(list);
+    //    if (list != null && list.length > 0) {
+    //        $each(list, function () {
+    //            $(city).append($("<option></option>").valueOf(this['Value']).html(this.['Text']));
+    //        });
+    //    }
+
+
+    //}
+</script>*@
 

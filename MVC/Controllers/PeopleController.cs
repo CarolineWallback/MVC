@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
-using NuGet.Protocol;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace MVC.Controllers
 {
@@ -33,20 +34,29 @@ namespace MVC.Controllers
             return View(peopleViewModel);
         }
 
+        [HttpPost]
+        public JsonResult GetCitySelectList(string id)
+        {
+            var countryId = int.Parse(id);
+            Country country = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == countryId);
 
-        //public JsonResult GetCitySelectList(string id)
-        //{
-        //    var countryId = int.Parse(id);
-        //    Country country = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == countryId);
+            List<CityDTO> citites = new();
 
+            foreach (var city in country.Cities.OrderBy(x => x.CityName).ToList())
+            {
+                CityDTO cityDto = new()
+                {
+                    CityId = city.CityId,
+                    CityName = city.CityName
 
-        //    List<City> cities = country.Cities.OrderBy(x => x.CityName).ToList();
-            
+                };
+                citites.Add(cityDto);
+            }
 
-        //    return cities;
-        //}
+            return Json(citites);
+        }
 
-    [HttpPost]
+        [HttpPost]
         public IActionResult CreatePerson(CreatePersonViewModel createPerson)
         {
             ModelState.Remove("id");
