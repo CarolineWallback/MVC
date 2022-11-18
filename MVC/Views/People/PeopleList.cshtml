@@ -102,10 +102,14 @@
             <span></span>
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>*@
+        <div class="form-row">
+            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
+            <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" onchange="ViewCities()" required></select>
+        </div>
         
         <div class="form-row">
             <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
-            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" asp-items="ViewBag.Cities" required></select>
+            <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" id="city" asp-items="ViewBag.Cities" required></select>
         </div>
         @*<div class="validation">
             <span></span>
@@ -123,4 +127,25 @@
     </form>
 </div>
 </div>
+
+<script>
+
+    function ViewCities(){
+        const countryId = document.getElementById('country').value;
+        alert(countryId);
+
+        const city = document.getElementById('city');
+        
+
+        $.ajax({
+            type: "POST",
+            url: "/People/GetCitySelectList?id=" + countryId,
+            success: function (response) {
+                
+                console.log(response.json)
+            },
+
+        });
+    }
+</script>
 

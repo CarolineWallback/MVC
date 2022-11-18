@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
+using NuGet.Protocol;
 
 namespace MVC.Controllers
 {
@@ -24,12 +25,28 @@ namespace MVC.Controllers
                 .Include(x => x.Languages).ToList(),
             };
 
-            ViewBag.Cities = new SelectList(_context.Cities, "CityId", "CityName");
-            ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
+            List<Country> countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
+
+            ViewBag.Countries = new SelectList(countries, "CountryId", "CountryName");
+            ViewBag.Cities = new SelectList(countries.First().Cities.OrderBy(x => x.CityName), "CityId", "CityName");
+            ViewBag.Languages = new MultiSelectList(_context.Languages.OrderBy(x => x.LanguageName), "LanguageId", "LanguageName");
             return View(peopleViewModel);
         }
 
-        [HttpPost]
+
+        //public JsonResult GetCitySelectList(string id)
+        //{
+        //    var countryId = int.Parse(id);
+        //    Country country = _context.Countries.Include(x => x.Cities).FirstOrDefault(x => x.CountryId == countryId);
+
+
+        //    List<City> cities = country.Cities.OrderBy(x => x.CityName).ToList();
+            
+
+        //    return cities;
+        //}
+
+    [HttpPost]
         public IActionResult CreatePerson(CreatePersonViewModel createPerson)
         {
             ModelState.Remove("id");

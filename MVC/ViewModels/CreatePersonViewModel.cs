@@ -13,6 +13,9 @@ namespace MVC.ViewModels
 
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "Country")]
+        public Country? Country { get; set; }
+        public int? CountryId { get; set; }
 
         [Display(Name = "City of Residence")]
         public City? City { get; set; }
