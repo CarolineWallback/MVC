@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
+using System.Data;
 
 namespace MVC.Controllers
 {
+    [Authorize(Roles = "Admin, Moderator")]
     public class LanguageController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -61,6 +64,8 @@ namespace MVC.Controllers
                 .Include(x => x.Languages)
                 .Where(x => x.Languages.Contains(language)).ToList()
             };
+
+            ViewBag.LanguageName = language.LanguageName;
             
             return View(peopleViewModel);
         }

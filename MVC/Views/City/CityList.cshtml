@@ -4,9 +4,9 @@
     ViewData["Title"] = "Cities";
 }
 
-@*Showing all people in the list*@
+@*Showing all cities in the list*@
 <div class="container mt-5">
-    <div class="row bg-dark text-light fw-semibold p-1">
+    <div class="row bg-dark text-light fw-semibold p-1 border-row">
         <div class="col p-1">
             <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
         </div>
@@ -37,32 +37,35 @@
 
 
 @*Add new person to list*@
-<div class="container add-new mt-5">
-    <form asp-controller="City" asp-action="CreateCity" method="post">
-        <h4 class="fw-bold mb-2">Add new city: </h4>
-        <br />
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+{
+    <div class="container add-new mt-5">
+        <form asp-controller="City" asp-action="CreateCity" method="post">
+            <h4 class="fw-bold mb-2">Add new city: </h4>
+            <br />
 
-        <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
-            <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" />
-        </div>
-        <div class="validation">
-            <span></span>
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+            <div class="form-row">
+                <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
+                <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" />
+            </div>
+            <div class="validation">
+                <span></span>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
-        <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
-            <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" asp-items="ViewBag.Countries"></select>
-        </div>
-        <div class="validation">
-            <span></span>
-            <span asp-validation-for="Country" class="text-danger"></span>
-        </div>
+            <div class="form-row">
+                <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
+                <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" asp-items="ViewBag.Countries"></select>
+            </div>
+            <div class="validation">
+                <span></span>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
 
-        <div>
-            <input class="form-button btn btn-success m-1" type="submit" value="Add City" />
-        </div>
+            <div>
+                <input class="form-button btn btn-success m-1" type="submit" value="Add City" />
+            </div>
 
-    </form>
-</div>
+        </form>
+    </div>
+}

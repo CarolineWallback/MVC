@@ -1,0 +1,62 @@
+﻿@model UsersViewModel
+
+@{
+    ViewData["Title"] = "UserList";
+}
+
+<div>
+    <div>
+        <a type="submit" class="btn btn-primary btn" asp-controller="Admin" asp-action="RoleSettings">Role Settings</a>
+    </div>
+
+    @*Showing all people in the list*@
+    <div class="container mt-5">
+        <div class="row bg-dark text-light fw-semibold p-1 border-row">
+            <div class="col p-1">
+                <h4>User</h4>
+            </div>
+            <div class="col p-1">
+                <h4>Roles</h4>
+            </div>
+            <div class="col-3 p-1">
+            </div>
+        </div>
+
+        @if (Model.applicationUsers.Count == 0)
+        {
+            <h4 class="fst-italic m-3">No users...</h4>
+        }
+        else
+        {
+            foreach (var user in Model.applicationUsers)
+            {   
+                if(user.Value.Contains("Admin"))
+                {
+                    <partial name="../Shared/_userRolePartial.cshtml" model="user" />
+                }
+
+            }
+            foreach (var user in Model.applicationUsers)
+            {
+                if (user.Value.Contains("Moderator") && !user.Value.Contains("Admin"))
+                {
+                    <partial name="../Shared/_userRolePartial.cshtml" model="user" />
+                }
+                
+            }
+            foreach (var user in Model.applicationUsers)
+            {
+                if(!user.Value.Contains("Admin") && !user.Value.Contains("Moderator"))
+                {
+                    <partial name="../Shared/_userRolePartial.cshtml" model="user"/>
+                }
+
+            }
+        }
+            
+
+    </div>
+
+</div>
+
+

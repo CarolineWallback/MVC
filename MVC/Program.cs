@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 
@@ -16,11 +17,31 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+});
+
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapRazorPages();
 
 //app.MapControllerRoute(
 //    name: "doctor",
@@ -37,6 +58,6 @@ app.UseSession();
 //    pattern: "people",
 //    defaults: new { controller = "People", action = "PeopleList" });
 
-app.MapControllerRoute(name: "default", pattern: "{controller=People}/{action=PeopleList}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

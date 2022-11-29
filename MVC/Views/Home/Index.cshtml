@@ -1,0 +1,19 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container text-center mt-5">
+
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <h1>Please sign in </h1>
+    }
+    else
+    {
+        <h1>Welcome @UserManager.Users.FirstOrDefault(x => x.UserName == @UserManager.GetUserName(User)).FirstName!</h1>
+    }
+
+</div>

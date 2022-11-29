@@ -1,0 +1,22 @@
+﻿@model KeyValuePair<ApplicationUser, List<string>>
+
+<div class="row bg-light text-bg-light p-1 border-row">
+    <div class="col">
+        <h5>@Model.Key</h5>
+    </div>
+    <div class="col">
+        @if (Model.Value.Count != 0)
+        {
+            foreach (var role in Model.Value)
+            {
+                <p class="lh-1">@role</p>
+            }
+
+        }
+    </div>
+    <div class="col-3">
+        <a type="submit" class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="EditUserRoles" asp-route-id=@Model.Key>Edit User Roles</a>
+        <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteUser" asp-route-id=@Model.Key>Delete User</a>
+    </div>
+</div>
+

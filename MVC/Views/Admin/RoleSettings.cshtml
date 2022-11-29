@@ -1,0 +1,39 @@
+﻿@model List<IdentityRole>
+
+@{
+    ViewData["Title"] = "RoleSettings";
+}
+
+
+<div class="container">
+    <div class="mb-1">
+        <a type="submit" class="btn btn-dark" asp-controller="Admin" asp-action="UserList">Back to list</a>
+    </div>
+    <div>
+        <a type="submit" class="btn btn-primary" asp-controller="Admin" asp-action="CreateRole">Create new role</a>
+    </div>
+    <div class="container mt-3">
+        <div class="row bg-dark text-light fw-semibold p-1 border-row">
+            <div class="col p-1">
+                <h4>Role</h4>
+            </div>
+            <div class="col-3 p-1">
+            </div>
+        </div>
+
+        @foreach(var role in Model)
+        {
+            <div class="row bg-light text-dark p-1 border-row">
+
+                <div class="col d-flex justify-content-between">
+                    <p>@role.Name </p>  
+                    <div>
+                        <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteApplicationRole" asp-route-id=@role>Delete Role</a>
+                    </div>
+                </div>
+           
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.Models;
 using System.ComponentModel.DataAnnotations;
-using MVC.Models;
 
 namespace MVC.ViewModels
 {

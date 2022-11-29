@@ -37,7 +37,7 @@
 
 @*Showing all people in the list*@
 <div class="container">
-    <div class="row bg-dark text-light fw-semibold p-1">
+        <div class="row bg-dark text-light fw-semibold p-1 border-row">
         <div class="col p-1">
             <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
         </div>
@@ -86,17 +86,17 @@
         <br />
 
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Name)</label>
+            <label class="fw-bold" asp-for="Name"></label>
             <input class="input rounded border-light m-1 add-new-input" asp-for="Name" type="text" required/>
         </div>
         
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.PhoneNumber)</label>
+            <label class="fw-bold" asp-for="PhoneNumber"></label>
             <input class="input rounded border-light m-1 add-new-input" asp-for="PhoneNumber" type="text" required />
         </div>
 
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Country)</label>
+            <label class="fw-bold" asp-for="Country"></label>
             <select name="CountryId" asp-for="CountryId" class="input rounded border-light m-1 add-new-input" id="country" asp-items="ViewBag.Countries" onchange="ViewCities()" required>
                     <option disabled selected value="">Select Country</option>
             </select>
@@ -104,14 +104,14 @@
         </div>
         
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.City)</label>
+            <label class="fw-bold" asp-for="City"></label>
             <select name="CityId" asp-for="CityId" class="input rounded border-light m-1 add-new-input" id="city" asp-items="Model.cities" required>
                     <option disabled selected value="">Select City</option>
             </select>
         </div>
 
         <div class="form-row">
-            <label class="fw-bold">@Html.DisplayNameFor(Model => Model.Languages)</label>
+            <label class="fw-bold" asp-for="Languages"></label>
             <select name="LanguageIds" asp-for="LanguageIds" asp-items="ViewBag.Languages" class="input rounded border-light m-1 add-languages" multiple>
             </select>
         </div>

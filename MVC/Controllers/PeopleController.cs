@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
 using MVC.ViewModels;
-using System.Diagnostics.Metrics;
+using System.Data;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -82,6 +83,7 @@ namespace MVC.Controllers
             return RedirectToAction("PeopleList");
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public IActionResult DeletePerson(string id)
         {
             Person personFromId = _context.People.FirstOrDefault(p => p.Id == id);

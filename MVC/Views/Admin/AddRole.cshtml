@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "AddRole";
+}
+
+<div class="container">
+
+    <div class="mb-5">
+        <a type="submit" class="btn btn-primary btn" asp-controller="Admin" asp-action="EditRoles">Return</a>
+    </div>
+    <div class="text-center">
+
+    <form asp-controller="Admin" asp-action="CreateRole" method="post" class="pt-3 pb-3">
+        <h4 class="fw-bold mb-2">Create new role: </h4>
+        <br />
+
+        <div class="form-row">
+            <input class="input rounded border-light m-1 add-new-input" name="name" type="text" placeholder="Name" required />
+        </div>
+
+        <div class="form-row">
+            <input class="form-button btn btn-success m-1" type="submit" value="Create" />
+        </div>
+
+    </form>
+    </div>
+
+</div>
+
+

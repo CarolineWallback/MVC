@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
@@ -7,6 +8,7 @@ using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
+    [Authorize(Roles = "Admin, Moderator")]
     public class CityController : Controller
     {
         private readonly ApplicationDbContext _context;

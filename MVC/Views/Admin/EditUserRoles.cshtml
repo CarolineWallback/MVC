@@ -1,0 +1,33 @@
+﻿@model UpdateUserRolesViewModel
+@{
+    ViewData["Title"] = "EditUserRoles";
+}
+<div class="container">
+    <div class="mb-5">
+        <a type="submit" class="btn btn-primary btn" asp-controller="Admin" asp-action="UserList">Cancel</a>
+    </div>
+
+    <div class="container add-new mt-5">
+        <form asp-controller="Admin" asp-action="EditUserRoles" asp-route-id="@Model" method="post">
+            <h4 class="fw-bold mb-2">Edit roles: </h4>
+            <br />
+            <div class="form-row">
+                <input class="fw-bold visually-hidden" asp-for="UserId" value="@Model.UserId" />
+            </div>
+            <div class="form-row">
+                <label class="fw-bold">Roles</label>
+                <select name="Roles" asp-for="Roles" asp-items="ViewBag.Roles" class="input rounded border-light m-1 add-languages" multiple selected="@Model.Roles"></select>
+            </div>
+
+            <div>
+                <input class="form-button btn btn-success m-1" type="submit" value="Update Roles" />
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+

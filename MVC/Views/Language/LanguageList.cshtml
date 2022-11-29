@@ -6,7 +6,7 @@
 
 @*Showing all langugages in the list*@
 <div class="container mt-5">
-    <div class="row bg-dark text-light fw-semibold p-1">
+    <div class="row bg-dark text-light fw-semibold p-1 border-row">
         <div class="col p-1">
             <h4>@Html.DisplayNameFor(Model => Model.Name)</h4>
         </div>
@@ -34,6 +34,9 @@
 
 
 @*Add new Language to list*@
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+{
+
 <div class="container add-new mt-5">
     <form asp-controller="Language" asp-action="CreateLanguage" method="post">
         <h4 class="fw-bold mb-2">Add new language: </h4>
@@ -54,3 +57,4 @@
 
     </form>
 </div>
+}
