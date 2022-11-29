@@ -8,7 +8,6 @@
     padding-bottom: 60px;
 }
 
-
 .footer {
     display: block;
     bottom: 0;
@@ -18,15 +17,24 @@
     position:absolute;
 }
 
-
 .tab {
     display: inline-block;
     margin-left: 10px;
 }
 
+.text-button {
+    text-decoration: none;
+    color: #ffffff8c;
+    padding-left: 0;
+}
+    .text-button:hover {
+        text-decoration: none;
+        color: #ffffffbf;
+    }
+
+
 .icon {
     color: rgb(0, 255, 144);
-   
 }
 
 .link{
@@ -34,7 +42,6 @@
     color: rgb(0, 255, 144);
     font-style: italic;
 }
-
 
 .add-new .form-row, .validation {
     display: flex;

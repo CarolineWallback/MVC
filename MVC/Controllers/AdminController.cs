@@ -74,7 +74,7 @@ namespace MVC.Controllers
             }
 
             List<IdentityRole> roles = _roleManager.Roles.ToList();
-            return View("EditRoles", roles);
+            return View("RoleSettings", roles);
         }
 
         
