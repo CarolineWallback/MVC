@@ -7,7 +7,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link text-capitalize" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.Users.FirstOrDefault(x => x.UserName == @UserManager.GetUserName(User)).FirstName!</a>
+            <a id="manage" class="nav-link text-capitalize fw-semibold" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.Users.FirstOrDefault(x => x.UserName == @UserManager.GetUserName(User)).FirstName!</a>
         </li>
         
         <li>

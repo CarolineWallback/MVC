@@ -9,7 +9,7 @@ using System.Data;
 
 namespace MVC.Controllers
 {
-    [Authorize(Roles = "Admin, Moderator")]
+    [Authorize(Roles = "Moderator")]
     public class CountryController : Controller
     {
         private readonly ApplicationDbContext _context;

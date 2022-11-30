@@ -39,13 +39,13 @@ namespace MVC.Controllers
             return View(roles);
         }
 
-        public IActionResult CreateRole()
+        public IActionResult CreateApplicationRole()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRole(string name)
+        public async Task<IActionResult> CreateApplicationRole(string name)
         {
             IdentityRole role = await _roleManager.FindByIdAsync(name);
             if(role != null)
@@ -56,7 +56,7 @@ namespace MVC.Controllers
 
             var newRole = new IdentityRole()
             {
-                Id = name,
+                Id = Guid.NewGuid().ToString(),
                 Name = name,
                 NormalizedName = name.ToUpper(),
 
@@ -77,11 +77,9 @@ namespace MVC.Controllers
             return View("RoleSettings", roles);
         }
 
-        
         public async Task <IActionResult> EditUserRoles(string id)
         {
-            var user = await _userManager.FindByEmailAsync(id);
-
+            var user = await _userManager.FindByIdAsync(id);
             UpdateUserRolesViewModel updateUser = new UpdateUserRolesViewModel()
             {
                 UserId = user.Id,
@@ -89,7 +87,6 @@ namespace MVC.Controllers
             };
 
             ViewBag.Roles = new MultiSelectList(_roleManager.Roles, "Id", "Name");
-
             return View(updateUser);
         }
 
@@ -98,11 +95,27 @@ namespace MVC.Controllers
         {
             var user = await _userManager.FindByIdAsync(updateUserRoles.UserId);
             IList<string> currentRoles = await _userManager.GetRolesAsync(user);
+            IList<ApplicationUser> adminList = await _userManager.GetUsersInRoleAsync("Admin");
 
-            await _userManager.RemoveFromRolesAsync(user, currentRoles);
-            await _userManager.AddToRolesAsync(user, updateUserRoles.Roles);
+            if(currentRoles.Contains("Admin") && adminList.Count <= 1 && !updateUserRoles.Roles.Contains("Admin"))
+            {
+                ViewBag.Admin = "There must be at least one Admin.";
+               
+                UpdateUserRolesViewModel updateUser = new UpdateUserRolesViewModel()
+                {
+                    UserId = user.Id,
+                    Roles = await _userManager.GetRolesAsync(user),
+                };
 
-            return RedirectToAction("UserList");
+                ViewBag.Roles = new MultiSelectList(_roleManager.Roles, "Id", "Name");
+                return View(updateUser);
+            }
+            else
+            {
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                await _userManager.AddToRolesAsync(user, updateUserRoles.Roles);
+                return RedirectToAction("UserList");
+            }
         }
 
 

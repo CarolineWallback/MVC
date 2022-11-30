@@ -22,8 +22,8 @@ namespace MVC.Data
         public DbSet <Language> Languages { get; set; }
 
         string AdminRoleId = "Admin";
-        string UserRoleId = "User";
         string ModeratorRoleId = "Moderator";
+        string UserRoleId = "User";
         string userId = Guid.NewGuid().ToString();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -99,7 +99,7 @@ namespace MVC.Data
 
         private void SeedUsers(ModelBuilder modelBuilder)
         {
-            //admin 
+            //seed admin 
             ApplicationUser user = new ApplicationUser()
             {
                 Id = userId,

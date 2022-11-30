@@ -8,7 +8,7 @@ using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
-    [Authorize(Roles = "Admin, Moderator")]
+    [Authorize(Roles = "Moderator")]
     public class CityController : Controller
     {
         private readonly ApplicationDbContext _context;

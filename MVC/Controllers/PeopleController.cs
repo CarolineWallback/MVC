@@ -9,7 +9,7 @@ using System.Data;
 
 namespace MVC.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User, Moderator")]
     public class PeopleController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -13,7 +13,7 @@
     }
     else
     {
-        <h1>Welcome @UserManager.Users.FirstOrDefault(x => x.UserName == @UserManager.GetUserName(User)).FirstName!</h1>
+        <h1 class="text-capitalize">Welcome @UserManager.Users.FirstOrDefault(x => x.UserName == @UserManager.GetUserName(User)).FirstName!</h1>
     }
 
 </div>
