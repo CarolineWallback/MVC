@@ -1,0 +1,89 @@
+﻿@model RoleViewModel
+
+@{
+    ViewData["Title"] = "UpdateRoleMembers";
+}
+
+<div class="container">
+    <div class="mb-4">
+        <a type="submit" class="btn btn-dark" asp-controller="Admin" asp-action="RoleSettings">Back</a>
+    </div>
+    
+    <h1 class="text-uppercase">@Model.Role.Name</h1>
+    
+    <form asp-controller="Admin" asp-action="UpdateRoleMembers" asp-route-id="@Model" method="post">
+        <div class="mb-4">
+            <div class="row bg-dark text-light p-1 border-row">
+                <div class="col">
+                    <h5>Members</h5>
+                </div>
+                <div class="col">
+               
+                </div>
+                <div class="col text-center">
+                    <h5>Remove</h5>
+                </div>
+            </div>
+            @if(Model.Members.Count < 1)
+            {
+                <h4>No members of type @Model.Role.Name</h4>
+            }
+            else
+            {
+                @foreach(var user in Model.Members)
+                {
+                    <div class="row bg-light text-bg-light p-1 border-row">
+                        <div class="col">
+                            <h5>@user.UserName</h5>
+                        </div>
+                        <div class="col">
+                            <p class="text-capitalize"> @user.FirstName @user.LastName </p>
+                        </div>
+                        <div class="col text-center">
+                            <input type="checkbox" name="DeleteIds" value="@user.Id">
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div>
+            <div class="row bg-dark text-light p-1 border-row">
+                <div class="col">
+                    <h5>Non-Members</h5>
+                </div>
+                <div class="col">
+                </div>
+                <div class="col text-center">
+                    <h5>Add</h5>
+                </div>
+            </div>
+            @if (Model.NonMembers.Count < 1)
+            {
+                <h4>Everyone is already a member of @Model.Role.Name</h4>
+            }
+            else
+            {
+                @foreach (var user in Model.NonMembers)
+                {
+                    <div class="row bg-light text-bg-light p-1 border-row">
+                        <div class="col">
+                            <h5>@user.UserName</h5>
+                        </div>
+                        <div class="col">
+                            <p class="text-capitalize"> @user.FirstName @user.LastName</p>
+                        </div>
+                        <div class="col text-center">
+                            <input type="checkbox" name="AddIds" value="@user.Id">
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <input class="visually-hidden" asp-for="RoleName" value="@Model.Role.Name" />
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary btn-lg mt-2">Save</button>
+        </div>
+  
+    </form>
+</div>
+

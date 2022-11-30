@@ -17,6 +17,10 @@
     position:absolute;
 }
 
+.col{
+    margin: auto;
+}
+
 .tab {
     display: inline-block;
     margin-left: 10px;

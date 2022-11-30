@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC.ViewModels;
+using System.Data;
 
 namespace MVC.Controllers
 {
@@ -116,6 +117,60 @@ namespace MVC.Controllers
                 await _userManager.AddToRolesAsync(user, updateUserRoles.Roles);
                 return RedirectToAction("UserList");
             }
+        }
+
+        public async Task <IActionResult> UpdateRoleMembers(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            var members = new List<ApplicationUser>();
+            var nonMembers = new List<ApplicationUser>();
+
+            var users = _userManager.Users.ToList();
+
+            foreach (var user in users)
+            {
+                var member = await _userManager.IsInRoleAsync(user, role.Name);
+
+                if (member)
+                    members.Add(user);
+                else
+                    nonMembers.Add(user);
+            }
+
+            RoleViewModel roleViewModel = new RoleViewModel()
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            };
+            
+            return View(roleViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRoleMembers(RoleViewModel roleViewModel)
+        {
+            var role = roleViewModel.RoleName;
+            var roleId = _roleManager.Roles.FirstOrDefault(x => x.Name == role);
+
+            if(roleViewModel.AddIds != null)
+            {
+                foreach (var id in roleViewModel.AddIds)
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    await _userManager.AddToRoleAsync(user, role);
+                }
+            }
+            if(roleViewModel.DeleteIds != null)
+            {
+                foreach (var id in roleViewModel.DeleteIds)
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    await _userManager.RemoveFromRoleAsync(user, role);
+                }
+            }
+            
+            return RedirectToAction("UpdateRoleMembers", new {id = roleId});
         }
 
 
