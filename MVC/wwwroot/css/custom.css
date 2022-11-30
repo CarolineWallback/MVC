@@ -16,11 +16,9 @@
     height: 40px;
     position:absolute;
 }
-
 .col{
-    margin: auto;
+    margin: unset;
 }
-
 .tab {
     display: inline-block;
     margin-left: 10px;
