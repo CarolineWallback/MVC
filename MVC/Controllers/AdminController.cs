@@ -69,7 +69,7 @@ namespace MVC.Controllers
         public async Task <IActionResult> DeleteApplicationRole(IdentityRole identityrole)
         {
             IdentityRole role = await _roleManager.FindByIdAsync(identityrole.Id);
-            if (role != null)
+            if (role != null && role.Name != "Admin")
             {
                 await _roleManager.DeleteAsync(role);
             }

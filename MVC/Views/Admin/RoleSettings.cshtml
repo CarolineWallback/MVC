@@ -28,8 +28,11 @@
                 <div class="col d-flex justify-content-between">
                     <h5>@role.Name </h5>  
                     <div>
+                        @if(role.Name != "Admin")
+                        {
+                            <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteApplicationRole" asp-route-id=@role>Delete Role</a>
+                        }
                         <a type="submit" class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="UpdateRoleMembers" asp-route-id=@role.Id>Members</a>
-                        <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteApplicationRole" asp-route-id=@role>Delete Role</a>
                     </div>
                 </div>
            

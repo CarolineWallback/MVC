@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
@@ -159,16 +161,20 @@ namespace MVC.Controllers
                 Id = person.Id,
                 Name = person.Name,
                 PhoneNumber = person.PhoneNumber,
-                CountryId = person.City.CountryId,
-                CityId = person.CityId,
-                LanguageIds = languageIds,
-                cities = (from city in countries.FirstOrDefault(x => x.CountryId == person.City.CountryId).Cities.OrderBy(x => x.CityName)
-                          select new SelectListItem
-                          {
-                              Value = city.CityId.ToString(),
-                              Text = city.CityName
-                          }).ToList()
-            };
+                LanguageIds = languageIds
+        };
+
+            if (person.City != null)
+            {
+                createPerson.CityId = person.CityId;
+                createPerson.CountryId = person.City.CountryId;
+                createPerson.cities = (from city in countries.FirstOrDefault(x => x.CountryId == person.City.CountryId).Cities.OrderBy(x => x.CityName)
+                                       select new SelectListItem
+                                       {
+                                           Value = city.CityId.ToString(),
+                                           Text = city.CityName
+                                       }).ToList();
+            }
 
             ViewBag.Countries = new SelectList(countries, "CountryId", "CountryName");
             ViewBag.Languages = new MultiSelectList(_context.Languages, "LanguageId", "LanguageName");
