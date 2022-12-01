@@ -25,16 +25,17 @@
         {
             <div class="row bg-light text-dark p-1 border-row">
 
-                <div class="col d-flex justify-content-between">
+                <div class="col">
                     <h5>@role.Name </h5>  
-                    <div>
-                        @if(role.Name != "Admin")
-                        {
-                            <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteApplicationRole" asp-route-id=@role>Delete Role</a>
-                        }
-                        <a type="submit" class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="UpdateRoleMembers" asp-route-id=@role.Id>Members</a>
-                    </div>
                 </div>
+                <div class="col-3">
+                    <a type="submit" class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="UpdateRoleMembers" asp-route-id=@role.Id>Members</a>
+                    @if(role.Name != "Admin")
+                    {
+                        <a type="submit" class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteApplicationRole" asp-route-id=@role>Delete Role</a>
+                    }
+                </div>
+                
            
             </div>
         }

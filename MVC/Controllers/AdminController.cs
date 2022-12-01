@@ -40,6 +40,17 @@ namespace MVC.Controllers
             return View(roles);
         }
 
+        public async Task <IActionResult> DeleteUser(string id)
+        {
+
+            var user = await _userManager.FindByIdAsync(id);
+            var admin = await _userManager.IsInRoleAsync(user, "Admin");
+            if(!admin)
+                await _userManager.DeleteAsync(user);
+
+            return RedirectToAction("UserList");
+        }
+
         public IActionResult CreateApplicationRole()
         {
             return View();
@@ -122,6 +133,48 @@ namespace MVC.Controllers
         public async Task <IActionResult> UpdateRoleMembers(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
+            var result = await GetMembersInRole(role);
+            
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRoleMembers(RoleViewModel roleViewModel)
+        {
+            var roleName = roleViewModel.RoleName;
+            var role = _roleManager.Roles.FirstOrDefault(x => x.Name == roleName);
+
+            if(roleViewModel.AddIds != null)
+            {
+                foreach (var id in roleViewModel.AddIds)
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    await _userManager.AddToRoleAsync(user, roleName);
+                }
+            }
+
+            if (roleViewModel.DeleteIds != null)
+            {
+                foreach (var id in roleViewModel.DeleteIds)
+                {
+                    IList<ApplicationUser> adminList = await _userManager.GetUsersInRoleAsync("Admin");
+                    if (roleName == "Admin" && adminList.Count <= 1)
+                    {
+                        ViewBag.Admin = "There must be at least one Admin.";
+                        var result = await GetMembersInRole(role);
+                        return View(result);
+                    }
+
+                    var user = await _userManager.FindByIdAsync(id);
+                    await _userManager.RemoveFromRoleAsync(user, roleName);
+                }
+            }
+            
+            return RedirectToAction("UpdateRoleMembers", new {id = role.Id});
+        }
+
+        private async Task<RoleViewModel> GetMembersInRole(IdentityRole role)
+        {
             var members = new List<ApplicationUser>();
             var nonMembers = new List<ApplicationUser>();
 
@@ -143,41 +196,8 @@ namespace MVC.Controllers
                 Members = members,
                 NonMembers = nonMembers
             };
-            
-            return View(roleViewModel);
+
+            return roleViewModel;
         }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateRoleMembers(RoleViewModel roleViewModel)
-        {
-            var role = roleViewModel.RoleName;
-            var roleId = _roleManager.Roles.FirstOrDefault(x => x.Name == role);
-
-            if(roleViewModel.AddIds != null)
-            {
-                foreach (var id in roleViewModel.AddIds)
-                {
-                    var user = await _userManager.FindByIdAsync(id);
-                    await _userManager.AddToRoleAsync(user, role);
-                }
-            }
-            if(roleViewModel.DeleteIds != null)
-            {
-                foreach (var id in roleViewModel.DeleteIds)
-                {
-                    var user = await _userManager.FindByIdAsync(id);
-                    await _userManager.RemoveFromRoleAsync(user, role);
-                }
-            }
-            
-            return RedirectToAction("UpdateRoleMembers", new {id = roleId});
-        }
-
-
-
-
-
-
-
     }
 }
