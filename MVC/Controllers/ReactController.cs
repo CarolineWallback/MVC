@@ -69,27 +69,34 @@ namespace MVC.Controllers
         [HttpPost("create")]
         public IActionResult Create(JsonObject person)
         {
-            string jsonPerson = person.ToString();
-            CreateReactPerson create = JsonConvert.DeserializeObject<CreateReactPerson>(jsonPerson);
-
-            Person newPerson = new()
+            try
             {
-                Name = create.name,
-                PhoneNumber = create.number,
-            };
+                string jsonPerson = person.ToString();
+                CreateReactPerson create = JsonConvert.DeserializeObject<CreateReactPerson>(jsonPerson);
 
-            if(create.city != null)
-            {
-                newPerson.CityId = create.city;
-                newPerson.City = _context.Cities.FirstOrDefault(x => x.CityId == create.city);
+                Person newPerson = new()
+                {
+                    Name = create.name,
+                    PhoneNumber = create.number,
+                };
+
+                if(create.city != null)
+                {
+                    newPerson.CityId = create.city;
+                    newPerson.City = _context.Cities.FirstOrDefault(x => x.CityId == create.city);
+                }
+                if (create.languages.Count > 0)
+                    newPerson.Languages = _context.Languages.Where(x => create.languages.Contains(x.LanguageId)).ToList();
+
+                _context.People.Add(newPerson);
+                    _context.SaveChanges();
+                    return StatusCode(201);
             }
-            if (create.languages.Count > 0)
-                newPerson.Languages = _context.Languages.Where(x => create.languages.Contains(x.LanguageId)).ToList();
-
-            _context.People.Add(newPerson);
-            _context.SaveChanges();
-
-            return StatusCode(202);
+            catch
+            {
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpGet("countries")]
