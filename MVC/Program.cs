@@ -31,6 +31,18 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 0;
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "myAllowSpecificOrigins",
+                      policy =>
+                      {
+                          policy.WithOrigins("*")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+
+                      });
+});
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -42,6 +54,8 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.UseCors("myAllowSpecificOrigins");
 
 //app.MapControllerRoute(
 //    name: "doctor",
