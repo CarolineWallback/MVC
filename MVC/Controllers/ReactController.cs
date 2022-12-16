@@ -102,7 +102,7 @@ namespace MVC.Controllers
                     newPerson.City = await _context.Cities.FirstOrDefaultAsync(x => x.CityId == create.cityId);
                 }
 
-                newPerson.Languages = await _context.Languages.Where(x => create.languages.Contains(x.LanguageName)).ToListAsync();
+                newPerson.Languages = await _context.Languages.Where(x => create.languageIds.Contains(x.LanguageId)).ToListAsync();
 
                 await _context.People.AddAsync(newPerson);
                 _context.SaveChanges();
