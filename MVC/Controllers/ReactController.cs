@@ -26,27 +26,44 @@ namespace MVC.Controllers
             return await _context.People.ToListAsync();
         }
 
-        //[Route("api/[controller]/Details")]
         [HttpGet("{id}")]
         public async Task<ReactPerson> GetPersonDetails(string id)
         {
             Person person = await _context.People.Include(x => x.City).Include(x => x.Languages).FirstOrDefaultAsync(x => x.Id == id);
             City cityFromId = await _context.Cities.FirstOrDefaultAsync(x => x.CityId == person.CityId);
             List<string> languages = new();
+            List<int> languageIds = new();
             foreach (var language in person.Languages)
             {
                 languages.Add(language.LanguageName);
+                languageIds.Add(language.LanguageId);
             }
 
+           
             ReactPerson reactPerson = new();
 
             if (cityFromId != null)
             {
                 reactPerson.City = cityFromId.CityName;
                 reactPerson.Country = _context.Countries.FirstOrDefault(x => x.CountryId == cityFromId.CountryId).CountryName;
+                reactPerson.CountryId = cityFromId.CountryId;
             }
 
             reactPerson.Languages = languages;
+            reactPerson.LanguageIds = languageIds;
+            reactPerson.LanguageModels = new List<ReactLanguage>();
+            foreach(var language in person.Languages)
+            {
+                ReactLanguage reactLanguage = new ReactLanguage()
+                {
+                    LanguageId = language.LanguageId,
+                    LanguageName = language.LanguageName
+                };
+
+                reactPerson.LanguageModels.Add(reactLanguage);
+            }
+           
+            
 
 
             return reactPerson;
@@ -63,11 +80,11 @@ namespace MVC.Controllers
 
                 return StatusCode(202);
             }
-            return StatusCode(404);
+            return StatusCode(500);
         }
 
         [HttpPost("create")]
-        public IActionResult Create(JsonObject person)
+        public async Task <IActionResult> Create(JsonObject person)
         {
             try
             {
@@ -80,23 +97,63 @@ namespace MVC.Controllers
                     PhoneNumber = create.number,
                 };
 
-                if(create.city != null)
+                if (create.cityId != null)
                 {
-                    newPerson.CityId = create.city;
-                    newPerson.City = _context.Cities.FirstOrDefault(x => x.CityId == create.city);
+                    newPerson.City = await _context.Cities.FirstOrDefaultAsync(x => x.CityId == create.cityId);
                 }
-                if (create.languages.Count > 0)
-                    newPerson.Languages = _context.Languages.Where(x => create.languages.Contains(x.LanguageId)).ToList();
 
-                _context.People.Add(newPerson);
-                    _context.SaveChanges();
-                    return StatusCode(201);
+                newPerson.Languages = await _context.Languages.Where(x => create.languages.Contains(x.LanguageName)).ToListAsync();
+
+                await _context.People.AddAsync(newPerson);
+                _context.SaveChanges();
+                return StatusCode(201);
             }
             catch
             {
                 return StatusCode(500);
             }
-            
+
+        }
+
+        [HttpPut]
+        public async Task <IActionResult> UpdatePerson (JsonObject person)
+        {
+            try
+            {
+                string jsonPerson = person.ToString();
+                CreateReactPerson createPerson = JsonConvert.DeserializeObject<CreateReactPerson>(jsonPerson);
+
+                var city = await _context.Cities.FindAsync(createPerson.cityId);
+                List<Language> languages = new();
+                foreach (var language in createPerson.languageModels)
+                {
+                    languages.Add(await _context.Languages.FirstOrDefaultAsync(x => x.LanguageId == language.LanguageId));
+                }
+                
+                Person personById = await _context.People.Include(x => x.City).Include(x => x.Languages).FirstOrDefaultAsync(x => x.Id == createPerson.id);
+                if (personById != null)
+                {
+                    personById.Name = createPerson.name;
+                    personById.PhoneNumber = createPerson.number;
+                    personById.Languages = languages;
+
+                    if (city != null)
+                    {
+                        personById.City = city;
+                    }
+                   
+                    await _context.SaveChangesAsync();
+                    return StatusCode(201);
+
+                }
+
+                return StatusCode(500);
+
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("countries")]
@@ -106,12 +163,13 @@ namespace MVC.Controllers
         }
 
         [HttpGet("cities/{id}")]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities(int id)
+        public async Task<ActionResult<IEnumerable<City>>> GetCitiesInCountry(int id)
         {
             List<City> cities = await _context.Cities.Where(x => x.CountryId == id).ToListAsync();
 
             return cities;
         }
+
 
         [HttpGet("languages")]
         public async Task<ActionResult<IEnumerable<Language>>> GetLanguages()
